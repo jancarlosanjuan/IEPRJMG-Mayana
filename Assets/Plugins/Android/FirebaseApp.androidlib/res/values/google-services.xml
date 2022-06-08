@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_android_client_id,@string/default_web_client_id">
+  <string name="gcm_defaultSenderId" translatable="false">962649025840</string>
+  <string name="google_storage_bucket" translatable="false">unity-mayana.appspot.com</string>
+  <string name="project_id" translatable="false">unity-mayana</string>
+  <string name="google_api_key" translatable="false">AIzaSyDABNKmRNq10f1yogb_6qJzmD_vfBZ5Z-M</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDABNKmRNq10f1yogb_6qJzmD_vfBZ5Z-M</string>
+  <string name="google_app_id" translatable="false">1:962649025840:android:4ad915a8ef572578a72cf5</string>
+  <string name="default_android_client_id" translatable="false">962649025840-e3ah6h1rbo06vvbnvhe2glk3udnlsq7g.apps.googleusercontent.com</string>
+  <string name="default_web_client_id" translatable="false">962649025840-rsj8lgl6h2ate7u8od6h1lagpn6okq50.apps.googleusercontent.com</string>
+</resources>

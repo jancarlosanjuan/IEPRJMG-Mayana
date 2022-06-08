@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "962649025840",
+    "project_id": "unity-mayana",
+    "storage_bucket": "unity-mayana.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962649025840:android:4ad915a8ef572578a72cf5",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.Mayana"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962649025840-e3ah6h1rbo06vvbnvhe2glk3udnlsq7g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.DefaultCompany.Mayana",
+            "certificate_hash": "d96e6a2177c72977259e59d9af4f4a6676139da6"
+          }
+        },
+        {
+          "client_id": "962649025840-rsj8lgl6h2ate7u8od6h1lagpn6okq50.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDABNKmRNq10f1yogb_6qJzmD_vfBZ5Z-M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "962649025840-rsj8lgl6h2ate7u8od6h1lagpn6okq50.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
