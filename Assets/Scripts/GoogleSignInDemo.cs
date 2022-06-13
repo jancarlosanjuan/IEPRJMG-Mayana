@@ -5,12 +5,15 @@ using System.Threading.Tasks;
 using Firebase;
 using Firebase.Auth;
 using Google;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GoogleSignInDemo : MonoBehaviour
 {
+    public GameManager gameManager;
     public Text infoText;
+    public TMP_Text txtpro;
     public string webClientId = "<your client id here>";
 
     private FirebaseAuth auth;
@@ -48,7 +51,8 @@ public class GoogleSignInDemo : MonoBehaviour
         GoogleSignIn.Configuration = configuration;
         GoogleSignIn.Configuration.UseGameSignIn = false;
         GoogleSignIn.Configuration.RequestIdToken = true;
-        AddToInformation("Calling SignIn");
+ //       AddToInformation("Calling SignIn");
+        txtpro.text = "signing in...";
 
         GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnAuthenticationFinished);
     }
@@ -74,11 +78,11 @@ public class GoogleSignInDemo : MonoBehaviour
                 if (enumerator.MoveNext())
                 {
                     GoogleSignIn.SignInException error = (GoogleSignIn.SignInException)enumerator.Current;
-                    AddToInformation("Got Error: " + error.Status + " " + error.Message);
+    //                AddToInformation("Got Error: " + error.Status + " " + error.Message);
                 }
                 else
                 {
-                    AddToInformation("Got Unexpected Exception?!?" + task.Exception);
+    //                AddToInformation("Got Unexpected Exception?!?" + task.Exception);
                 }
             }
         }
@@ -88,10 +92,13 @@ public class GoogleSignInDemo : MonoBehaviour
         }
         else
         {
-            AddToInformation("Welcome: " + task.Result.DisplayName + "!");
-            AddToInformation("Email = " + task.Result.Email);
-            AddToInformation("Google ID Token = " + task.Result.IdToken);
-            AddToInformation("Email = " + task.Result.Email);
+         //   AddToInformation("Welcome: " + task.Result.DisplayName + "!");
+         //   AddToInformation("Email = " + task.Result.Email);
+        //    AddToInformation("Google ID Token = " + task.Result.IdToken);
+        //    AddToInformation("Email = " + task.Result.Email);
+            txtpro.text = task.Result.Email + "\n" + task.Result.IdToken;
+            gameManager.email = task.Result.Email;
+            gameManager.token = task.Result.IdToken;
             SignInWithGoogleOnFirebase(task.Result.IdToken);
         }
     }
