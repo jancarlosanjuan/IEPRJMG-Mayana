@@ -1,24 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
+using Google;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public string email;
-    public string token;
-    
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
+    public GoogleSignInUser GoogleUser { get; set; }
+    public string AccessToken { get; set; }
+    public string RefreshToken { get; set; }
 }
