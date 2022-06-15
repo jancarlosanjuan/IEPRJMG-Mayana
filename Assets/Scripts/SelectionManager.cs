@@ -10,8 +10,8 @@ public class SelectionManager : MonoBehaviour
     public List<Sprite> spriteList = new List<Sprite>();
 
     private int selectedSprite = 0;
-    public GameObject choosenPet;
-    public GameObject choosenBG;
+    public ScriptableGameOBJ choosenPet;
+    public ScriptableGameOBJ choosenBG;
 
     public void NextSprite()
     {
@@ -30,14 +30,16 @@ public class SelectionManager : MonoBehaviour
     public void ConfirmPet()
     {
         // make this into scriptable object
-        PrefabUtility.SaveAsPrefabAsset(choosenPet, "Assets/Prefabs/selectedPet.prefab");
+        //PrefabUtility.SaveAsPrefabAsset(choosenPet, "Assets/Prefabs/selectedPet.prefab");
+
         SceneManager.LoadScene("BackGroundSelection");
     }
 
     public void ConfirmBG()
     {
         // make this into scriptable object
-        PrefabUtility.SaveAsPrefabAsset(choosenBG, "Assets/Prefabs/selectedBG.prefab");
+        //PrefabUtility.SaveAsPrefabAsset(choosenBG, "Assets/Prefabs/selectedBG.prefab");
+
         SceneManager.LoadScene("GameScene");
     }
 
