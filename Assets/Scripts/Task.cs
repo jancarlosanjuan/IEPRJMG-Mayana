@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Task : MonoBehaviour
+public struct Task
 {
-    public string title { get; set; }
-    public string notes { get; set; }
-    public string status { get; set; }
-    public string due { get; set; }
-
-    
+    public string TaskListId { get; set; }
+    public string TaskId { get; set; }
+    public string Title { get; set; }
+    public string Notes { get; set; }
+    public string Status { get; set; }
+    public string DueDate { get; set; }
 }

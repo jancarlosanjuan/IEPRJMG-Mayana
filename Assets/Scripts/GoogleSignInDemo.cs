@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Firebase;
 using Firebase.Auth;
@@ -19,8 +18,7 @@ public class GoogleSignInDemo : MonoBehaviour
 
     private FirebaseAuth auth;
     private GoogleSignInConfiguration configuration;
-    private List<string> listIDs = new List<string>();
-    public List<Task> taskList = new List<Task>();
+    private List<Task> tasksList = new();
 
     private void Awake()
     {
@@ -72,7 +70,7 @@ public class GoogleSignInDemo : MonoBehaviour
         
         GoogleSignIn.Configuration = configuration;
         GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnAuthenticationFinished);
-        listIDs.Clear();
+        tasksList.Clear();
     }
 
     private void OnSignOut()
@@ -146,10 +144,8 @@ public class GoogleSignInDemo : MonoBehaviour
             gameManager.AccessToken = json["access_token"];
             gameManager.RefreshToken = json["refresh_token"];
 
-            // Requesting all calendar events in PRIMARY calendar
-            //string uri = "https://www.googleapis.com/calendar/v3/calendars/calendarId/events?";
+            // Request all task lists from user
             string uri = "https://tasks.googleapis.com/tasks/v1/users/@me/lists";
-            //uri += "calendarId=primary";
             using var req2 = UnityWebRequest.Get(uri);
             req2.SetRequestHeader("Authorization", $"Bearer {gameManager.AccessToken}");
             req2.SetRequestHeader("Accept", "application/json");
@@ -158,18 +154,14 @@ public class GoogleSignInDemo : MonoBehaviour
         
             if (req2.result == UnityWebRequest.Result.Success)
             {
-                txtpro.text = "ID's: \n";
                 var j2 = SimpleJSON.JSON.Parse(req2.downloadHandler.text);
-                int n = j2.Count;
 
-                for (int i = 0; i < n; i++)
+                foreach (var taskListJson in j2["items"].AsArray.Children)
                 {
-                    listIDs.Add(j2["items"][i]["id"]);
-                    txtpro.text = txtpro.text + "\n" + j2["items"][i]["id"] + "\n";
+                    string taskListId = taskListJson["id"];
+                    string reqUri = "https://www.googleapis.com/tasks/v1/lists/" + taskListId + "/tasks";
 
-                    string bruh = j2["items"][i]["id"];
-                    string ts = "https://www.googleapis.com/tasks/v1/lists/" + bruh + "/tasks";
-                    using var req3 = UnityWebRequest.Get(ts);
+                    using var req3 = UnityWebRequest.Get(reqUri);
                     req3.SetRequestHeader("Authorization", $"Bearer {gameManager.AccessToken}");
                     req3.SetRequestHeader("Accept", "application/json");
 
@@ -178,35 +170,30 @@ public class GoogleSignInDemo : MonoBehaviour
                     if (req3.result == UnityWebRequest.Result.Success)
                     {
                         var j3 = SimpleJSON.JSON.Parse(req3.downloadHandler.text);
-                        int n2 = j3.Count;
 
-                        for (int j = 0; j < n2; j++)
+                        txtpro.text = "";
+
+                        foreach (var taskJson in j3["items"].AsArray.Children)
                         {
-                            Task temp = new Task();
-                            temp.title = j3["items"][j]["title"];
-                            temp.notes = j3["items"][j]["notes"];
-                            temp.status = j3["items"][j]["status"];
-                            temp.due = j3["items"][j]["due"];
-                            taskList.Add(temp);
-
-                            txtpro.text = txtpro.text + "\n" + temp.title + "\n" + temp.notes + "\n" + temp.status + "\n" + temp.due + "\n";
+                            Task task = new Task
+                            {
+                                TaskListId = taskListId,
+                                TaskId = taskJson["id"],
+                                Title = taskJson["title"],
+                                Notes = taskJson["notes"],
+                                Status = taskJson["status"],
+                                DueDate = taskJson["due"]
+                            };
+                            tasksList.Add(task);
+                            
+                            txtpro.text += $"\nTitle: {task.Title}\nTask ID: {task.TaskId}\nNotes: {task.Notes}\nStatus: {task.Status}\nDue Date: {task.DueDate}";
                         }
-                        
                     }
-
                     else
                     {
                         txtpro.text = $"{req3.error}\n{req3.downloadHandler.text}";
                     }
-
-                    
-
-
                 }
-
-
-
-
             }
             else
             {
