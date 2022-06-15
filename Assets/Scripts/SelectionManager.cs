@@ -29,12 +29,14 @@ public class SelectionManager : MonoBehaviour
     
     public void ConfirmPet()
     {
+        // make this into scriptable object
         PrefabUtility.SaveAsPrefabAsset(choosenPet, "Assets/Prefabs/selectedPet.prefab");
         SceneManager.LoadScene("BackGroundSelection");
     }
 
     public void ConfirmBG()
     {
+        // make this into scriptable object
         PrefabUtility.SaveAsPrefabAsset(choosenBG, "Assets/Prefabs/selectedBG.prefab");
         SceneManager.LoadScene("GameScene");
     }
