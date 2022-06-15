@@ -167,7 +167,8 @@ public class GoogleSignInDemo : MonoBehaviour
                     listIDs.Add(j2["items"][i]["id"]);
                     txtpro.text = txtpro.text + "\n" + j2["items"][i]["id"] + "\n";
 
-                    string ts = "https://www.googleapis.com/tasks/v1/lists/" + "{j2["items"][i]["id"]}" + "/tasks";
+                    string bruh = j2["items"][i]["id"];
+                    string ts = "https://www.googleapis.com/tasks/v1/lists/" + bruh + "/tasks";
                     using var req3 = UnityWebRequest.Get(ts);
                     req3.SetRequestHeader("Authorization", $"Bearer {gameManager.AccessToken}");
                     req3.SetRequestHeader("Accept", "application/json");
