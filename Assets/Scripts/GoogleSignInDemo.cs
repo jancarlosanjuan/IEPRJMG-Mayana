@@ -19,6 +19,8 @@ public class GoogleSignInDemo : MonoBehaviour
 
     private FirebaseAuth auth;
     private GoogleSignInConfiguration configuration;
+    private List<string> listIDs = new List<string>();
+    public List<Task> taskList = new List<Task>();
 
     private void Awake()
     {
@@ -31,10 +33,8 @@ public class GoogleSignInDemo : MonoBehaviour
             ForceTokenRefresh = true,
             AdditionalScopes = new []
             {
-                "https://www.googleapis.com/auth/calendar",
-                "https://www.googleapis.com/auth/calendar.readonly",
-                "https://www.googleapis.com/auth/calendar.events",
-                "https://www.googleapis.com/auth/calendar.events.readonly"
+                "https://www.googleapis.com/auth/tasks",
+                "https://www.googleapis.com/auth/tasks.readonly"
             }
         };
         
@@ -72,6 +72,7 @@ public class GoogleSignInDemo : MonoBehaviour
         
         GoogleSignIn.Configuration = configuration;
         GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnAuthenticationFinished);
+        listIDs.Clear();
     }
 
     private void OnSignOut()
@@ -131,10 +132,8 @@ public class GoogleSignInDemo : MonoBehaviour
         f.AddField("client_id", "962649025840-rsj8lgl6h2ate7u8od6h1lagpn6okq50");
         f.AddField("client_secret", "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");
         f.AddField("grant_type", "authorization_code");
-        f.AddField("scope", "https://www.googleapis.com/auth/calendar");
-        f.AddField("scope", "https://www.googleapis.com/auth/calendar.readonly");
-        f.AddField("scope", "https://www.googleapis.com/auth/calendar.events");
-        f.AddField("scope", "https://www.googleapis.com/auth/calendar.events.readonly");
+        f.AddField("scope", "https://www.googleapis.com/auth/tasks");
+        f.AddField("scope", "https://www.googleapis.com/auth/tasks.readonly");
 
         using var req1 = UnityWebRequest.Post("https://accounts.google.com/o/oauth2/token", f);
 
@@ -148,8 +147,9 @@ public class GoogleSignInDemo : MonoBehaviour
             gameManager.RefreshToken = json["refresh_token"];
 
             // Requesting all calendar events in PRIMARY calendar
-            string uri = "https://www.googleapis.com/calendar/v3/calendars/calendarId/events?";
-            uri += "calendarId=primary";
+            //string uri = "https://www.googleapis.com/calendar/v3/calendars/calendarId/events?";
+            string uri = "https://tasks.googleapis.com/tasks/v1/users/@me/lists";
+            //uri += "calendarId=primary";
             using var req2 = UnityWebRequest.Get(uri);
             req2.SetRequestHeader("Authorization", $"Bearer {gameManager.AccessToken}");
             req2.SetRequestHeader("Accept", "application/json");
@@ -158,7 +158,54 @@ public class GoogleSignInDemo : MonoBehaviour
         
             if (req2.result == UnityWebRequest.Result.Success)
             {
-                txtpro.text = req2.downloadHandler.text;
+                txtpro.text = "ID's: \n";
+                var j2 = SimpleJSON.JSON.Parse(req2.downloadHandler.text);
+                int n = j2.Count;
+
+                for (int i = 0; i < n; i++)
+                {
+                    listIDs.Add(j2["items"][i]["id"]);
+                    txtpro.text = txtpro.text + "\n" + j2["items"][i]["id"] + "\n";
+
+                    string ts = "https://www.googleapis.com/tasks/v1/lists/" + "{j2["items"][i]["id"]}" + "/tasks";
+                    using var req3 = UnityWebRequest.Get(ts);
+                    req3.SetRequestHeader("Authorization", $"Bearer {gameManager.AccessToken}");
+                    req3.SetRequestHeader("Accept", "application/json");
+
+                    yield return req3.SendWebRequest();
+
+                    if (req3.result == UnityWebRequest.Result.Success)
+                    {
+                        var j3 = SimpleJSON.JSON.Parse(req3.downloadHandler.text);
+                        int n2 = j3.Count;
+
+                        for (int j = 0; j < n2; j++)
+                        {
+                            Task temp = new Task();
+                            temp.title = j3["items"][j]["title"];
+                            temp.notes = j3["items"][j]["notes"];
+                            temp.status = j3["items"][j]["status"];
+                            temp.due = j3["items"][j]["due"];
+                            taskList.Add(temp);
+
+                            txtpro.text = txtpro.text + "\n" + temp.title + "\n" + temp.notes + "\n" + temp.status + "\n" + temp.due + "\n";
+                        }
+                        
+                    }
+
+                    else
+                    {
+                        txtpro.text = $"{req3.error}\n{req3.downloadHandler.text}";
+                    }
+
+                    
+
+
+                }
+
+
+
+
             }
             else
             {
