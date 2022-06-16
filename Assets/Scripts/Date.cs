@@ -31,7 +31,7 @@ public class Date : MonoBehaviour
     public void UpdateTime()
     {
         string date = System.DateTime.UtcNow.ToLocalTime().ToString("dd MMM");
-        string time = System.DateTime.UtcNow.ToLocalTime().ToString("hh : mm tt");
+        string time = System.DateTime.UtcNow.ToLocalTime().ToString("hh : mm tt ");
         dayMonth.text = date;
         hourMinutesSeconds.text = time;
     }
