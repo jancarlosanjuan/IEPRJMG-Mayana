@@ -16,8 +16,8 @@ MonoBehaviour:
   selectedPet: {fileID: 6117289095566359417, guid: 11e9aa46d25e94d42b08038928360c42, type: 3}
   selectedBG: {fileID: 6562460432586425723, guid: c3637216936df154498588d26ef260d9, type: 3}
   hp: 10
-  food: 10
-  money: 80
+  food: 5
+  money: 999439
   completedTasks: 1
   overduedTasks: 1
   filteredList: {fileID: 0}
