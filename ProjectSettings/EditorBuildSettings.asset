@@ -5,7 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/PetSelectionScene.unity
+    guid: db91249f8fbf5a940a40787cad44523c
+  - enabled: 1
+    path: Assets/Scenes/BackGroundSelection.unity
+    guid: 8c0d2087fb0f68a4eaeb91ab6a2aa1d4
+  - enabled: 1
+    path: Assets/Scenes/GameScene.unity
+    guid: 15f6253e5a3bb8b4d8f02a7c69a63a7a
   m_configObjects: {}
