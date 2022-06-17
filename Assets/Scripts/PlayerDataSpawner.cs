@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.IO;
+using System;
 
 public class PlayerDataSpawner : MonoBehaviour
 {
@@ -15,16 +16,74 @@ public class PlayerDataSpawner : MonoBehaviour
     public List<GameObject> bgList = new List<GameObject>();
     public TaskList list;
 
+    private int currentYearInt;
+    private int currentMonthInt;
+    private int currentDayInt;
+
+    private int currentTaskYearInt;
+    private int currentTaskMonthInt;
+    private int currentTaskDayInt;
+
     // Start is called before the first frame update
     void Start()
     {
+        string currentDate = System.DateTime.UtcNow.ToLocalTime().ToString("yyyy MM dd");
+
+        string currentYearStr = currentDate.Substring(0, 4);
+        string currentMonthStr = currentDate.Substring(5, 2);
+        string currentDayStr = currentDate.Substring(8, 2);
+
+        currentYearInt = Int32.Parse(currentYearStr);
+        currentMonthInt = Int32.Parse(currentMonthStr);
+        currentDayInt = Int32.Parse(currentDayStr);
+
         AssignSelectedPet();
         AssignSelectedBG();
         AssignTaskList();
 
         mobilePath = Application.persistentDataPath;
-        string json = File.ReadAllText(mobilePath + "/" + playerData.emailID + ".json");
-        JsonUtility.FromJsonOverwrite(json, playerData);
+        string loadjson = File.ReadAllText(mobilePath + "/" + playerData.emailID + ".json");
+        JsonUtility.FromJsonOverwrite(loadjson, playerData);
+
+
+        for (int i = 0; i < playerData.filteredList.tasksList.Count; i++)
+        {
+            // DUE DATE FORMAT: 2022-06-08T00:00:000Z
+            // check if overdue
+            string currentTaskYearStr = playerData.filteredList.tasksList[i].dueDate.Substring(0, 4);
+            string currentTaskMonthStr = playerData.filteredList.tasksList[i].dueDate.Substring(5, 2);
+            string currentTaskDayStr = playerData.filteredList.tasksList[i].dueDate.Substring(8, 2);
+
+            currentTaskYearInt = Int32.Parse(currentTaskYearStr);
+            currentTaskMonthInt = Int32.Parse(currentTaskMonthStr);
+            currentTaskDayInt = Int32.Parse(currentTaskDayStr);
+
+            // compare if completed
+            if (playerData.filteredList.tasksList[i].status == "Completed")
+            {
+                if (playerData.filteredList.tasksList[i].isListedAsComplete == false)
+                {
+                    playerData.completedTasks++;
+                    playerData.filteredList.tasksList[i].isListedAsComplete = true;
+                }
+            }
+
+            // compare to current date
+            if (currentTaskYearInt <= currentYearInt)
+            {
+                if (currentTaskMonthInt <= currentMonthInt)
+                {
+                    if (currentTaskDayInt < currentDayInt)
+                    {
+                        if (playerData.filteredList.tasksList[i].isListedAsOverDue == false)
+                        {
+                            playerData.overduedTasks++;
+                            playerData.filteredList.tasksList[i].isListedAsOverDue = true;
+                        }
+                    }
+                }
+            }
+        }
 
         player.text = playerData.selectedPet.name;
         bg.text = playerData.selectedBG.name;
@@ -36,7 +95,7 @@ public class PlayerDataSpawner : MonoBehaviour
 
         else
         {
-            player.text = playerData.filteredList.tasksList[0].title;
+            player.text = playerData.overduedTasks.ToString();
         }
 
         if (playerData.selectedBG == null)
@@ -46,11 +105,15 @@ public class PlayerDataSpawner : MonoBehaviour
 
         else
         {
-            bg.text = playerData.selectedBGName;
+            bg.text = playerData.filteredList.tasksList.Count.ToString();
         }
 
         Instantiate(playerData.selectedPet);
         Instantiate(playerData.selectedBG);
+
+        mobilePath = Application.persistentDataPath;
+        string saveJson = JsonUtility.ToJson(playerData);
+        File.WriteAllText(mobilePath + "/" + playerData.emailID + ".json", saveJson);
     }
 
     private void AssignSelectedPet()

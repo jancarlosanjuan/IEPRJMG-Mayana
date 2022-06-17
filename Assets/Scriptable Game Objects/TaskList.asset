@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: TaskList
   m_EditorClassIdentifier: 
   tasksList:
-  - taskListId: 0
-    taskId: 123
-    title: test1
-    notes: do this and that
-    status: Needs completion
-    dueDate: 123456
+  - taskListId: 1
+    taskId: 123123123
+    title: dem
+    notes: woah
+    status: completed
+    dueDate: 2022-06-08T00:00:000Z
   - taskListId: 1
     taskId: 123123123
     title: yikes
     notes: woah
     status: completed
-    dueDate: yikes
+    dueDate: 2022-06-09T00:00:000Z

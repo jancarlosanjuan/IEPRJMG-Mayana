@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
 
 public class OnLoad : MonoBehaviour
 {
@@ -26,27 +27,5 @@ public class OnLoad : MonoBehaviour
         mobilePath = Application.persistentDataPath;
         string json = File.ReadAllText(mobilePath + "/" + gameManager.GoogleUser.Email + ".json");
         JsonUtility.FromJsonOverwrite(json, playerData);
-
-        /*
-        // filter out completed and 
-        for (int i = 0; i < playerData.filteredList.tasksList.Count; i++)
-        {
-            // compare if completed
-            if (playerData.filteredList.tasksList[i].status == "Completed")
-            {
-                // remove
-                //playerData.filteredList.tasksList[i].
-                //playerData.completedTasks++;
-            }
-
-            // check if overdue
-            
-            else if ()
-            {
-                // remove
-                //playerData.filteredList.tasksList[i].
-                playerData.overduedTasks++;
-            }
-        }*/
     }
 }
