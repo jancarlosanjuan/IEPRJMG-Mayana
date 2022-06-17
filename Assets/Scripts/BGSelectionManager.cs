@@ -14,9 +14,12 @@ public class BGSelectionManager : MonoBehaviour
     public GameObject choosenBG;
     public ScriptableGameOBJ playerData;
 
+    //public TriggerEvent onSave;
+
     private void Start()
     {
         Debug.Log(playerData.selectedPet.name);
+        Instantiate(playerData.selectedPet);
     }
 
     public void Update()
@@ -47,6 +50,10 @@ public class BGSelectionManager : MonoBehaviour
         // make this into scriptable object
         if (playerData.selectedBG.GetComponent<SpriteRenderer>())
             playerData.selectedBG.GetComponent<SpriteRenderer>().sprite = spriteList[selectedSprite];
+
+        // SAVE DATA
+        //onSave.Invoke();
+
         SceneManager.LoadScene("GameScene");
     }
 
@@ -55,13 +62,11 @@ public class BGSelectionManager : MonoBehaviour
         if (playerData.selectedBG.GetComponent<SpriteRenderer>())
             playerData.selectedBG.GetComponent<SpriteRenderer>().sprite = spriteList[selectedSprite];
 
-        /*
         if (playerData.selectedBG != null)
         {
             playerData.selectedBG = null;
             playerData.selectedBG = bgList[selectedSprite];
         }
-        */
 
         SceneManager.LoadScene("PetSelectionScene");
     }

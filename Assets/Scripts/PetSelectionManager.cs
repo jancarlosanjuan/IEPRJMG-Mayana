@@ -14,6 +14,12 @@ public class PetSelectionManager : MonoBehaviour
     public GameObject choosenPet;
     public ScriptableGameOBJ playerData;
 
+    private void Start()
+    {
+        playerData.selectedPet = null;
+        playerData.selectedPet = choosenPet;
+    }
+
     public void Update()
     {
         if (isButtonPressed)
@@ -43,13 +49,11 @@ public class PetSelectionManager : MonoBehaviour
         if (playerData.selectedPet.GetComponent<SpriteRenderer>())
             playerData.selectedPet.GetComponent<SpriteRenderer>().sprite = spriteList[selectedSprite];
 
-        /*
         if (playerData.selectedPet != null)
         {
             playerData.selectedPet = null;
             playerData.selectedPet = petList[selectedSprite];
         }
-        */
 
         SceneManager.LoadScene("BackGroundSelection");
     }
