@@ -59,7 +59,7 @@ public class PlayerDataSpawner : MonoBehaviour
             currentTaskDayInt = Int32.Parse(currentTaskDayStr);
 
             // compare if completed
-            if (playerData.filteredList.tasksList[i].status == "Completed")
+            if (playerData.filteredList.tasksList[i].status == "completed")
             {
                 if (playerData.filteredList.tasksList[i].isListedAsComplete == false)
                 {
@@ -69,7 +69,7 @@ public class PlayerDataSpawner : MonoBehaviour
                 }
             }
 
-            // compare to current date
+            // compare to late
             else if (currentTaskYearInt <= currentYearInt)
             {
                 if (currentTaskMonthInt <= currentMonthInt)

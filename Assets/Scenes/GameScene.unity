@@ -9517,8 +9517,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 97b8c80f80bc9474db064b33cd7ee1fb, type: 2}
-  player: {fileID: 0}
-  bg: {fileID: 0}
   petList:
   - {fileID: 6171788399823339091, guid: 471e242899fffe14eaf4bb0587089f7a, type: 3}
   - {fileID: 2875515538392243185, guid: 1c3694436b9e5b84bae2c02362f02b13, type: 3}
