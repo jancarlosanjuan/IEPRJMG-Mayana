@@ -876,6 +876,7 @@ MonoBehaviour:
   onChangeHealth: {fileID: 11400000, guid: 4e1ed9a2d139d69488fb60caa6e79627, type: 2}
   onChangeFood: {fileID: 11400000, guid: 8a2cf2cced041d84a88203a81eca67e6, type: 2}
   onCloseShop: {fileID: 11400000, guid: 6233c7db3610d81478f3d13eb6c526c7, type: 2}
+  onCheckForCostumes: {fileID: 11400000, guid: d2500c6a4b556ff469197533d20ee737, type: 2}
   data: {fileID: 11400000, guid: e07fe8352c771464c8ee3fd105e9514d, type: 2}
 --- !u!1 &144873212
 GameObject:
@@ -11974,7 +11975,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1474126521
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14751,6 +14752,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1948127420}
+  - component: {fileID: 1948127421}
   m_Layer: 5
   m_Name: ChangeCostume
   m_TagString: Untagged
@@ -14779,6 +14781,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1948127421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948127419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a67a688903fedb4a854cc010146e1a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onCheckCostumes: {fileID: 11400000, guid: d2500c6a4b556ff469197533d20ee737, type: 2}
+  data: {fileID: 11400000, guid: e07fe8352c771464c8ee3fd105e9514d, type: 2}
+  button: {fileID: 1474126520}
 --- !u!1 &1950704649
 GameObject:
   m_ObjectHideFlags: 0

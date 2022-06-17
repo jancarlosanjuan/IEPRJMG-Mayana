@@ -40,19 +40,15 @@ public class CostumeEditor : MonoBehaviour
         if (data.list.Count == 0)
             return;
 
+        index++;
+        if (index >= sprites.Length)
+            index = 0;
 
-        while (!data.list.Contains(sprites[index].type) || index != 0)
+        while (!data.list.Contains(sprites[index].type) && index != 0)
         {
             index++;
             if (index >= sprites.Length)
                 index = 0;
-
-            /*if (index == 0)
-            {
-                toEdit.sprite = sprites[0].sprite;
-                return;
-            }*/
-                
         }
        
         toEdit.sprite = sprites[index].sprite;

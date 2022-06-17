@@ -21,6 +21,8 @@ public class BuyConfirmation : MonoBehaviour
     [SerializeField]
     private TriggerEvent onCloseShop;
     [SerializeField]
+    private TriggerEvent onCheckForCostumes;
+    [SerializeField]
     private CostumeData data;
 
     private void Start()
@@ -58,7 +60,7 @@ public class BuyConfirmation : MonoBehaviour
         if(item.type == ItemType.Costume)
         {
             data.list.Add(item.costumeType);
-            Debug.Log("costume added!");
+            onCheckForCostumes.Invoke();
             data.UpdateReadOnly();
         }
 
