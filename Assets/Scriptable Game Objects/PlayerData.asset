@@ -12,5 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01a36dbedaac6d7479298fb293222ec5, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
+  emailID: 
   selectedPet: {fileID: 6117289095566359417, guid: 11e9aa46d25e94d42b08038928360c42, type: 3}
   selectedBG: {fileID: 6562460432586425723, guid: c3637216936df154498588d26ef260d9, type: 3}
+  hp: 0
+  food: 0
+  money: 0
+  completedTasks: 0
+  overduedTasks: 0
+  filteredList: {fileID: 0}

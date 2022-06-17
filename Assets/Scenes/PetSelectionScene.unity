@@ -1100,8 +1100,15 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5d4da1fd7f8d33f44a04b749ec266b45, type: 3}
   - {fileID: 21300000, guid: 581ace9beeecffa4d8d254fbaf4c4705, type: 3}
   - {fileID: 21300000, guid: fab7ada554a617546a8ee884224f28b1, type: 3}
+  petList:
+  - {fileID: 6171788399823339091, guid: 471e242899fffe14eaf4bb0587089f7a, type: 3}
+  - {fileID: 2875515538392243185, guid: 1c3694436b9e5b84bae2c02362f02b13, type: 3}
+  - {fileID: 6238905334370496966, guid: 564db541f3331cb468de6f008d3c23ad, type: 3}
+  - {fileID: 900074237315853205, guid: 1b7f70f0472e3a944a67c76b56de8cfb, type: 3}
+  - {fileID: 4879796452593184940, guid: 2dc07efeabea9db45ae4c8651197f857, type: 3}
+  - {fileID: 8309806280791493019, guid: 145b5ada8c4a72a49bf2004147c47ebe, type: 3}
   choosenPet: {fileID: 4122122753282576744}
-  choosenPetData: {fileID: 11400000, guid: 97b8c80f80bc9474db064b33cd7ee1fb, type: 2}
+  playerData: {fileID: 11400000, guid: 97b8c80f80bc9474db064b33cd7ee1fb, type: 2}
 --- !u!1 &2004428512
 GameObject:
   m_ObjectHideFlags: 0

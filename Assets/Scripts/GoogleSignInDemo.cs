@@ -14,11 +14,13 @@ public class GoogleSignInDemo : MonoBehaviour
     [SerializeField] GameManager gameManager;
     [SerializeField] string webClientId = "<your client id here>";
     [SerializeField] TMP_Text txtpro;
+    [SerializeField] TMP_Text googleUserEmailTXT;
     // [SerializeField] Text infoText;
 
     private FirebaseAuth auth;
     private GoogleSignInConfiguration configuration;
     public TaskList list;
+    public TriggerEvent onUserSuccessfulSignIn;
 
     private void Awake()
     {
@@ -119,7 +121,9 @@ public class GoogleSignInDemo : MonoBehaviour
 
             StartCoroutine(Test());
 
-            // SignInWithGoogleOnFirebase(task.Result.IdToken);
+            // save email here (will serve as unique id of user)
+            googleUserEmailTXT.text = googleUser.Email;
+
         }
     }
 
@@ -186,8 +190,10 @@ public class GoogleSignInDemo : MonoBehaviour
                             list.tasksList.Add(task);
                             txtpro.text += $"\nTitle: {task.title}\nTask ID: {task.taskId}\nNotes: {task.notes}\nStatus: {task.status}\nDue Date: {task.dueDate}";
                         }
+
                         //call event for comparing
-                        
+                        onUserSuccessfulSignIn.Invoke();
+
                     }
                     else
                     {
