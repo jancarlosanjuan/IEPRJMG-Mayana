@@ -16,7 +16,6 @@ public class PetSelectionManager : MonoBehaviour
 
     private void Start()
     {
-        playerData.selectedPet = null;
         playerData.selectedPet = choosenPet;
     }
 
@@ -53,6 +52,7 @@ public class PetSelectionManager : MonoBehaviour
         {
             playerData.selectedPet = null;
             playerData.selectedPet = petList[selectedSprite];
+            playerData.selectedPetName = petList[selectedSprite].name;
         }
 
         SceneManager.LoadScene("BackGroundSelection");

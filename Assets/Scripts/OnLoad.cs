@@ -25,8 +25,9 @@ public class OnLoad : MonoBehaviour
     {
         mobilePath = Application.persistentDataPath;
         string json = File.ReadAllText(mobilePath + "/" + gameManager.GoogleUser.Email + ".json");
-        JsonUtility.FromJsonOverwrite(json, playerData);
+        JsonUtility.FromJsonOverwrite(json, playerData);    
 
+        /*
         // filter out completed and 
         for (int i = 0; i < playerData.filteredList.tasksList.Count; i++)
         {
@@ -39,14 +40,13 @@ public class OnLoad : MonoBehaviour
             }
 
             // check if overdue
-            /*
+            
             else if ()
             {
                 // remove
                 //playerData.filteredList.tasksList[i].
                 playerData.overduedTasks++;
             }
-            */
-        }
+        }*/
     }
 }

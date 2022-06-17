@@ -10,7 +10,10 @@ public class ScriptableGameOBJ : ScriptableObject
     public string emailID;
 
     public GameObject selectedPet;
+    public string selectedPetName;
+
     public GameObject selectedBG;
+    public string selectedBGName;
 
     public int hp;
     public int food;
@@ -20,4 +23,5 @@ public class ScriptableGameOBJ : ScriptableObject
     public int overduedTasks;
 
     public TaskList filteredList;
+    //
 }

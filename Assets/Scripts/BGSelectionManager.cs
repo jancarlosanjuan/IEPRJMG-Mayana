@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class BGSelectionManager : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class BGSelectionManager : MonoBehaviour
     public GameObject choosenBG;
     public ScriptableGameOBJ playerData;
 
-    //public TriggerEvent onSave;
+    public string mobilePath;
 
     private void Start()
     {
@@ -51,9 +52,15 @@ public class BGSelectionManager : MonoBehaviour
         if (playerData.selectedBG.GetComponent<SpriteRenderer>())
             playerData.selectedBG.GetComponent<SpriteRenderer>().sprite = spriteList[selectedSprite];
 
-        // SAVE DATA
-        //onSave.Invoke();
+        if (playerData.selectedBG != null)
+        {
+            playerData.selectedBG = null;
+            playerData.selectedBG = bgList[selectedSprite];
+            playerData.selectedBGName = bgList[selectedSprite].name;
+        }
 
+        // SAVE DATA
+        SaveSelectedOBJs();
         SceneManager.LoadScene("GameScene");
     }
 
@@ -66,8 +73,16 @@ public class BGSelectionManager : MonoBehaviour
         {
             playerData.selectedBG = null;
             playerData.selectedBG = bgList[selectedSprite];
+            playerData.selectedBGName = bgList[selectedSprite].name;
         }
 
         SceneManager.LoadScene("PetSelectionScene");
+    }
+
+    public void SaveSelectedOBJs()
+    {
+        mobilePath = Application.persistentDataPath;
+        string json = JsonUtility.ToJson(playerData);
+        File.WriteAllText(mobilePath + "/" + playerData.emailID + ".json", json);
     }
 }
