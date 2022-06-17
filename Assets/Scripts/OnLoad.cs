@@ -70,6 +70,7 @@ public class OnLoad : MonoBehaviour
                 {
                     playerData.completedTasks++;
                     playerData.filteredList.tasksList[i].isListedAsComplete = true;
+                    playerData.filteredList.tasksList.RemoveAt(i);
                 }
             }
 
@@ -84,6 +85,7 @@ public class OnLoad : MonoBehaviour
                         {
                             playerData.overduedTasks++;
                             playerData.filteredList.tasksList[i].isListedAsOverDue = true;
+                            playerData.filteredList.tasksList.RemoveAt(i);
                         }
                     }
                 }

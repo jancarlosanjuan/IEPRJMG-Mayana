@@ -64,6 +64,7 @@ public class PlayerDataSpawner : MonoBehaviour
                 {
                     playerData.completedTasks++;
                     playerData.filteredList.tasksList[i].isListedAsComplete = true;
+                    playerData.filteredList.tasksList.RemoveAt(i);
                 }
             }
 
@@ -78,6 +79,7 @@ public class PlayerDataSpawner : MonoBehaviour
                         {
                             playerData.overduedTasks++;
                             playerData.filteredList.tasksList[i].isListedAsOverDue = true;
+                            playerData.filteredList.tasksList.RemoveAt(i);
                         }
                     }
                 }
