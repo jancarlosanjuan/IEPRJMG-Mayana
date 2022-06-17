@@ -19,9 +19,13 @@ MonoBehaviour:
     notes: woah
     status: completed
     dueDate: 2022-06-08T00:00:000Z
+    isListedAsComplete: 0
+    isListedAsOverDue: 0
   - taskListId: 1
     taskId: 123123123
     title: yikes
     notes: woah
     status: completed
     dueDate: 2022-06-09T00:00:000Z
+    isListedAsComplete: 0
+    isListedAsOverDue: 0

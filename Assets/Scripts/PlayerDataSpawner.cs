@@ -69,7 +69,7 @@ public class PlayerDataSpawner : MonoBehaviour
             }
 
             // compare to current date
-            if (currentTaskYearInt <= currentYearInt)
+            else if (currentTaskYearInt <= currentYearInt)
             {
                 if (currentTaskMonthInt <= currentMonthInt)
                 {
