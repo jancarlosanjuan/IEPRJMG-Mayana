@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class PupUpWindow : MonoBehaviour
 {
-    public TriggerEvent onOpenList;
-    public GameObject[] objects;
-
+    [SerializeField]
+    private TriggerEvent onOpenList;
+    [SerializeField]
+    private TriggerEvent onCloseList;
+    [SerializeField]
+    private GameObject[] objects;
+    
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         OnHidePanel();
         onOpenList.Attach(OnShowPanel);
+        onCloseList.Attach(OnHidePanel);
     }
 
     private void OnDisable()
     {
         onOpenList.Detach(OnShowPanel);
+        onCloseList.Detach(OnHidePanel);
     }
 
     public void OnShowPanel()
