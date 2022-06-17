@@ -124,8 +124,6 @@ public class GoogleSignInDemo : MonoBehaviour
             // save email here (will serve as unique id of user)
             googleUserEmailTXT.text = googleUser.Email;
 
-            //call event for comparing
-            onUserSuccessfulSignIn.Invoke();
         }
     }
 
@@ -192,8 +190,10 @@ public class GoogleSignInDemo : MonoBehaviour
                             list.tasksList.Add(task);
                             txtpro.text += $"\nTitle: {task.title}\nTask ID: {task.taskId}\nNotes: {task.notes}\nStatus: {task.status}\nDue Date: {task.dueDate}";
                         }
+
                         //call event for comparing
-                        
+                        onUserSuccessfulSignIn.Invoke();
+
                     }
                     else
                     {

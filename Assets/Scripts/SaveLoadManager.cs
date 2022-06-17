@@ -53,7 +53,7 @@ public class SaveLoadManager : MonoBehaviour
             playerData.overduedTasks = 0;
             playerData.filteredList = list;
 
-            onLoad.Invoke();
+            onSave.Invoke();
             SceneManager.LoadScene("PetSelectionScene");
         }
     }
