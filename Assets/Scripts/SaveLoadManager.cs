@@ -18,7 +18,6 @@ public class SaveLoadManager : MonoBehaviour
     public TriggerEvent onSave;
     public TriggerEvent onLoad;
 
-
     private void OnEnable()
     {
         onUserSuccessfulSignIn.Attach(OnCheckUserExist);

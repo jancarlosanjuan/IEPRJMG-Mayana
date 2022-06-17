@@ -49,6 +49,8 @@ public class OnLoad : MonoBehaviour
         string json = File.ReadAllText(mobilePath + "/" + gameManager.GoogleUser.Email + ".json");
         JsonUtility.FromJsonOverwrite(json, playerData);
 
+
+        // FILTER LIST
         for (int i = 0; i < playerData.filteredList.tasksList.Count; i++)
         {
             // DUE DATE FORMAT: 2022-06-08T00:00:000Z

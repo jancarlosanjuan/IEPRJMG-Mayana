@@ -24,8 +24,7 @@ public class PlayerDataSpawner : MonoBehaviour
     private int currentTaskMonthInt;
     private int currentTaskDayInt;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         string currentDate = System.DateTime.UtcNow.ToLocalTime().ToString("yyyy MM dd");
 
@@ -45,7 +44,7 @@ public class PlayerDataSpawner : MonoBehaviour
         string loadjson = File.ReadAllText(mobilePath + "/" + playerData.emailID + ".json");
         JsonUtility.FromJsonOverwrite(loadjson, playerData);
 
-
+        // FILTER LIST
         for (int i = 0; i < playerData.filteredList.tasksList.Count; i++)
         {
             // DUE DATE FORMAT: 2022-06-08T00:00:000Z
@@ -85,6 +84,7 @@ public class PlayerDataSpawner : MonoBehaviour
             }
         }
 
+        // DEBUGGING PURPOSES /////////////////////////////////////////////
         player.text = playerData.selectedPet.name;
         bg.text = playerData.selectedBG.name;
 
@@ -107,10 +107,38 @@ public class PlayerDataSpawner : MonoBehaviour
         {
             bg.text = playerData.filteredList.tasksList.Count.ToString();
         }
-
+        //////////////////////////////////////////////////////////////////
+        ///
         Instantiate(playerData.selectedPet);
         Instantiate(playerData.selectedBG);
 
+        // SAVE
+        SaveData();
+    }
+
+
+    void Start()
+    {
+        
+    }
+
+    void OnApplicationQuit()
+    {
+        SaveData();
+    }
+
+    void OnApplicationFocus(bool hasFocus)
+    {
+        SaveData();
+    }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        SaveData();
+    }
+
+    void SaveData()
+    {
         mobilePath = Application.persistentDataPath;
         string saveJson = JsonUtility.ToJson(playerData);
         File.WriteAllText(mobilePath + "/" + playerData.emailID + ".json", saveJson);
@@ -167,5 +195,11 @@ public class PlayerDataSpawner : MonoBehaviour
     private void AssignTaskList()
     {
         playerData.filteredList = list;
+    }
+
+    public void ResetPlayerDataTasks()
+    {
+        playerData.overduedTasks = 0;
+        playerData.completedTasks = 0;
     }
 }
