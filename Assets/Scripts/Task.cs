@@ -11,6 +11,6 @@ public class Task
     public string notes;
     public string status;
     public string dueDate;
-    public bool isListedAsComplete = false;
-    public bool isListedAsOverDue = false;
+    public bool isListedAsComplete;
+    public bool isListedAsOverDue;
 }

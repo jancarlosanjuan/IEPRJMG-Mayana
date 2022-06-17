@@ -53,7 +53,6 @@ public class SaveLoadManager : MonoBehaviour
             playerData.filteredList = list;
             playerData.costumeList.Clear();
 
-
             onSave.Invoke();
             SceneManager.LoadScene("PetSelectionScene");
         }

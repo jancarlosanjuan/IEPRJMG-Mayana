@@ -16,6 +16,10 @@ public class TaskUpdate : MonoBehaviour
     {
         for(int i = 0; i < playerStats.filteredList.tasksList.Count; i++)
         {
+            if (playerStats.filteredList.tasksList[i].isListedAsOverDue ||
+                playerStats.filteredList.tasksList[i].isListedAsComplete)
+                return;
+
             TaskUI temp = GameObject.Instantiate(taskPrefab, content.transform);
             temp.title.text = playerStats.filteredList.tasksList[i].title;
             temp.description.text = playerStats.filteredList.tasksList[i].notes;

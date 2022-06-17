@@ -66,13 +66,13 @@ public class OnLoad : MonoBehaviour
             currentTaskDayInt = Int32.Parse(currentTaskDayStr);
 
             // compare if completed
-            if (playerData.filteredList.tasksList[i].status == "Completed")
+            if (playerData.filteredList.tasksList[i].status == "completed")
             {
                 if (playerData.filteredList.tasksList[i].isListedAsComplete == false)
                 {
                     playerData.completedTasks++;
                     playerData.filteredList.tasksList[i].isListedAsComplete = true;
-                    playerData.filteredList.tasksList.RemoveAt(i);
+                    //playerData.filteredList.tasksList.RemoveAt(i);
                 }
             }
 
@@ -87,7 +87,7 @@ public class OnLoad : MonoBehaviour
                         {
                             playerData.overduedTasks++;
                             playerData.filteredList.tasksList[i].isListedAsOverDue = true;
-                            playerData.filteredList.tasksList.RemoveAt(i);
+                            //playerData.filteredList.tasksList.RemoveAt(i);
                         }
                     }
                 }
