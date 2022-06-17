@@ -15,11 +15,11 @@ MonoBehaviour:
   emailID: 
   selectedPet: {fileID: 2875515538392243185, guid: 1c3694436b9e5b84bae2c02362f02b13, type: 3}
   selectedPetName: Cat2
-  selectedBG: {fileID: 6562460432586425723, guid: c3637216936df154498588d26ef260d9, type: 3}
+  selectedBG: {fileID: 6074210040020745883, guid: ab7aca0fe6fbe7b40a36b297a5b17213, type: 3}
   selectedBGName: BG3
-  hp: 0
-  food: 0
-  money: 0
+  hp: 10
+  food: 10
+  money: 999999
   completedTasks: 0
   overduedTasks: 12
   filteredList: {fileID: 11400000, guid: 6adbe7e90326e964b9b5c34cedb6570b, type: 2}
