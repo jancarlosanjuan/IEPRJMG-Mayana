@@ -18,7 +18,7 @@ public class GoogleSignInDemo : MonoBehaviour
 
     private FirebaseAuth auth;
     private GoogleSignInConfiguration configuration;
-    private List<Task> tasksList = new();
+    public TaskList list;
 
     private void Awake()
     {
@@ -70,7 +70,7 @@ public class GoogleSignInDemo : MonoBehaviour
         
         GoogleSignIn.Configuration = configuration;
         GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnAuthenticationFinished);
-        tasksList.Clear();
+        list.tasksList.Clear();
     }
 
     private void OnSignOut()
@@ -172,22 +172,22 @@ public class GoogleSignInDemo : MonoBehaviour
                         var j3 = SimpleJSON.JSON.Parse(req3.downloadHandler.text);
 
                         txtpro.text = "";
-
+                        
                         foreach (var taskJson in j3["items"].AsArray.Children)
                         {
-                            Task task = new Task
-                            {
-                                TaskListId = taskListId,
-                                TaskId = taskJson["id"],
-                                Title = taskJson["title"],
-                                Notes = taskJson["notes"],
-                                Status = taskJson["status"],
-                                DueDate = taskJson["due"]
-                            };
-                            tasksList.Add(task);
-                            
-                            txtpro.text += $"\nTitle: {task.Title}\nTask ID: {task.TaskId}\nNotes: {task.Notes}\nStatus: {task.Status}\nDue Date: {task.DueDate}";
+                            Task task = new Task();
+                            task.taskListId = taskListId;
+                            task.taskId = taskJson["id"];
+                            task.title = taskJson["title"];
+                            task.notes = taskJson["notes"];
+                            task.status = taskJson["status"];
+                            task.dueDate = taskJson["due"];
+
+                            list.tasksList.Add(task);
+                            txtpro.text += $"\nTitle: {task.title}\nTask ID: {task.taskId}\nNotes: {task.notes}\nStatus: {task.status}\nDue Date: {task.dueDate}";
                         }
+                        //call event for comparing
+                        
                     }
                     else
                     {
