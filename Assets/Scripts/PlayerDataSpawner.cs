@@ -117,11 +117,6 @@ public class PlayerDataSpawner : MonoBehaviour
     }
 
 
-    void Start()
-    {
-        
-    }
-
     void OnApplicationQuit()
     {
         SaveData();

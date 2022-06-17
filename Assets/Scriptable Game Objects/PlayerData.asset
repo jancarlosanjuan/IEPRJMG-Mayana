@@ -17,9 +17,9 @@ MonoBehaviour:
   selectedPetName: Cat2
   selectedBG: {fileID: 6074210040020745883, guid: ab7aca0fe6fbe7b40a36b297a5b17213, type: 3}
   selectedBGName: BG3
-  hp: 10
-  food: 10
-  money: 999999
+  hp: 3
+  food: 1
+  money: 999959
   completedTasks: 0
-  overduedTasks: 12
+  overduedTasks: 0
   filteredList: {fileID: 11400000, guid: 6adbe7e90326e964b9b5c34cedb6570b, type: 2}
