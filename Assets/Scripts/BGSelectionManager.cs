@@ -9,8 +9,15 @@ public class BGSelectionManager : MonoBehaviour
     private bool isButtonPressed = false;
 
     public List<Sprite> spriteList = new List<Sprite>();
+    public List<GameObject> bgList = new List<GameObject>();
+
     public GameObject choosenBG;
-    public ScriptableGameOBJ choosenBGData;
+    public ScriptableGameOBJ playerData;
+
+    private void Start()
+    {
+        Debug.Log(playerData.selectedPet.name);
+    }
 
     public void Update()
     {
@@ -38,15 +45,24 @@ public class BGSelectionManager : MonoBehaviour
     public void ConfirmBG()
     {
         // make this into scriptable object
-        if (choosenBGData.selectedBG.GetComponent<SpriteRenderer>())
-            choosenBGData.selectedBG.GetComponent<SpriteRenderer>().sprite = spriteList[selectedSprite];
+        if (playerData.selectedBG.GetComponent<SpriteRenderer>())
+            playerData.selectedBG.GetComponent<SpriteRenderer>().sprite = spriteList[selectedSprite];
         SceneManager.LoadScene("GameScene");
     }
 
     public void BackToPetSelection()
     {
-        if (choosenBGData.selectedBG.GetComponent<SpriteRenderer>())
-            choosenBGData.selectedBG.GetComponent<SpriteRenderer>().sprite = spriteList[selectedSprite];
+        if (playerData.selectedBG.GetComponent<SpriteRenderer>())
+            playerData.selectedBG.GetComponent<SpriteRenderer>().sprite = spriteList[selectedSprite];
+
+        /*
+        if (playerData.selectedBG != null)
+        {
+            playerData.selectedBG = null;
+            playerData.selectedBG = bgList[selectedSprite];
+        }
+        */
+
         SceneManager.LoadScene("PetSelectionScene");
     }
 }

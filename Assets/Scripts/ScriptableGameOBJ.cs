@@ -7,6 +7,17 @@ using UnityEngine;
                  menuName = "Scriptable OBJ/ New Player Data")]
 public class ScriptableGameOBJ : ScriptableObject
 {
+    public string emailID;
+
     public GameObject selectedPet;
     public GameObject selectedBG;
+
+    public int hp;
+    public int food;
+    public int money;
+
+    public int completedTasks;
+    public int overduedTasks;
+
+    public TaskList filteredList;
 }

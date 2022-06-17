@@ -9,8 +9,10 @@ public class PetSelectionManager : MonoBehaviour
     private bool isButtonPressed = false;
 
     public List<Sprite> spriteList = new List<Sprite>();
+    public List<GameObject> petList = new List<GameObject>();
+
     public GameObject choosenPet;
-    public ScriptableGameOBJ choosenPetData;
+    public ScriptableGameOBJ playerData;
 
     public void Update()
     {
@@ -38,8 +40,17 @@ public class PetSelectionManager : MonoBehaviour
     public void ConfirmPet()
     {
         // make this into scriptable object
-        if (choosenPetData.selectedPet.GetComponent<SpriteRenderer>())
-            choosenPetData.selectedPet.GetComponent<SpriteRenderer>().sprite = spriteList[selectedSprite];
+        if (playerData.selectedPet.GetComponent<SpriteRenderer>())
+            playerData.selectedPet.GetComponent<SpriteRenderer>().sprite = spriteList[selectedSprite];
+
+        /*
+        if (playerData.selectedPet != null)
+        {
+            playerData.selectedPet = null;
+            playerData.selectedPet = petList[selectedSprite];
+        }
+        */
+
         SceneManager.LoadScene("BackGroundSelection");
     }
 }
