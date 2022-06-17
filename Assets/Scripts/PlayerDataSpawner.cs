@@ -11,15 +11,16 @@ public class PlayerDataSpawner : MonoBehaviour
     public TMP_Text bg;
     private string mobilePath;
 
-
     public List<GameObject> petList = new List<GameObject>();
     public List<GameObject> bgList = new List<GameObject>();
+    public TaskList list;
 
     // Start is called before the first frame update
     void Start()
     {
         AssignSelectedPet();
         AssignSelectedBG();
+        AssignTaskList();
 
         mobilePath = Application.persistentDataPath;
         string json = File.ReadAllText(mobilePath + "/" + playerData.emailID + ".json");
@@ -35,8 +36,7 @@ public class PlayerDataSpawner : MonoBehaviour
 
         else
         {
-            player.text = playerData.selectedPetName;
-
+            player.text = playerData.filteredList.tasksList[0].title;
         }
 
         if (playerData.selectedBG == null)
@@ -99,5 +99,10 @@ public class PlayerDataSpawner : MonoBehaviour
                 playerData.selectedBG = bgList[2];
                 break;
         }
+    }
+
+    private void AssignTaskList()
+    {
+        playerData.filteredList = list;
     }
 }

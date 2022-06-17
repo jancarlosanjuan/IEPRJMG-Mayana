@@ -23,5 +23,6 @@ public class ScriptableGameOBJ : ScriptableObject
     public int overduedTasks;
 
     public TaskList filteredList;
+
     //
 }

@@ -546,6 +546,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6562460432586425722, guid: c3637216936df154498588d26ef260d9, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d82445c891aaac742a0d60122e405974, type: 3}
     - target: {fileID: 6562460432586425723, guid: c3637216936df154498588d26ef260d9, type: 3}
       propertyPath: m_Name
       value: selectedBG
@@ -650,7 +654,7 @@ MonoBehaviour:
   - {fileID: 6074210040020745883, guid: ab7aca0fe6fbe7b40a36b297a5b17213, type: 3}
   choosenBG: {fileID: 6562460432375800750}
   playerData: {fileID: 11400000, guid: 97b8c80f80bc9474db064b33cd7ee1fb, type: 2}
-  onSave: {fileID: 11400000, guid: f7956febf736003429f658fd393a6ddd, type: 2}
+  mobilePath: 
 --- !u!1 &681802673
 GameObject:
   m_ObjectHideFlags: 0

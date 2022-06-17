@@ -25,7 +25,7 @@ public class OnLoad : MonoBehaviour
     {
         mobilePath = Application.persistentDataPath;
         string json = File.ReadAllText(mobilePath + "/" + gameManager.GoogleUser.Email + ".json");
-        JsonUtility.FromJsonOverwrite(json, playerData);    
+        JsonUtility.FromJsonOverwrite(json, playerData);
 
         /*
         // filter out completed and 
