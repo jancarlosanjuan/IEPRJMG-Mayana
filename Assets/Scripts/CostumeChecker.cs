@@ -13,7 +13,7 @@ public class CostumeChecker : MonoBehaviour
 
     private void Start()
     {
-        button.SetActive(false);
+        CheckForCostumes();
     }
 
 

@@ -24,5 +24,15 @@ public class ScriptableGameOBJ : ScriptableObject
 
     public TaskList filteredList;
 
-    //
+    public List<string> costumeList = new List<string>();
+
+    public void PopulateCostumeList(CostumeData costumeListData)
+    {
+        costumeList.Clear();
+        foreach (CostumeType costume in costumeListData.list)
+        {
+            costumeList.Add(costume.ToString());
+        }
+    }
 }
+

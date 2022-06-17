@@ -1694,6 +1694,7 @@ MonoBehaviour:
   gameManager: {fileID: 41481117}
   playerData: {fileID: 11400000, guid: 97b8c80f80bc9474db064b33cd7ee1fb, type: 2}
   mobilePath: 
+  costumeData: {fileID: 11400000, guid: e07fe8352c771464c8ee3fd105e9514d, type: 2}
   onLoad: {fileID: 11400000, guid: 0063aa041d1f0b1418cceee756e4b5a4, type: 2}
 --- !u!1 &1783138914
 GameObject:

@@ -8,13 +8,13 @@ using System;
 public class PlayerDataSpawner : MonoBehaviour
 {
     public ScriptableGameOBJ playerData;
-    public TMP_Text player;
-    public TMP_Text bg;
     private string mobilePath;
 
     public List<GameObject> petList = new List<GameObject>();
     public List<GameObject> bgList = new List<GameObject>();
     public TaskList list;
+    public CostumeData costumeData;
+
 
     private int currentYearInt;
     private int currentMonthInt;
@@ -39,6 +39,7 @@ public class PlayerDataSpawner : MonoBehaviour
         AssignSelectedPet();
         AssignSelectedBG();
         AssignTaskList();
+        AssignCostumeData();
 
         mobilePath = Application.persistentDataPath;
         string loadjson = File.ReadAllText(mobilePath + "/" + playerData.emailID + ".json");
@@ -86,42 +87,11 @@ public class PlayerDataSpawner : MonoBehaviour
             }
         }
 
-        // DEBUGGING PURPOSES /////////////////////////////////////////////
-        player.text = playerData.selectedPet.name;
-        bg.text = playerData.selectedBG.name;
-
-        if (playerData.selectedPet == null)
-        {
-            player.text = "NULL";
-        }
-
-        else
-        {
-            player.text = playerData.overduedTasks.ToString();
-        }
-
-        if (playerData.selectedBG == null)
-        {
-            bg.text = "NULL";
-        }
-
-        else
-        {
-            bg.text = playerData.filteredList.tasksList.Count.ToString();
-        }
-        //////////////////////////////////////////////////////////////////
-        ///
         Instantiate(playerData.selectedPet);
         Instantiate(playerData.selectedBG);
 
         // SAVE
         SaveData();
-    }
-
-
-    void Start()
-    {
-        
     }
 
     void OnApplicationQuit()
@@ -141,6 +111,7 @@ public class PlayerDataSpawner : MonoBehaviour
 
     void SaveData()
     {
+        Debug.Log("Called");
         mobilePath = Application.persistentDataPath;
         string saveJson = JsonUtility.ToJson(playerData);
         File.WriteAllText(mobilePath + "/" + playerData.emailID + ".json", saveJson);
@@ -175,7 +146,7 @@ public class PlayerDataSpawner : MonoBehaviour
                 break;
         }
     }
-    
+
     private void AssignSelectedBG()
     {
         switch (playerData.selectedBGName)
@@ -197,6 +168,15 @@ public class PlayerDataSpawner : MonoBehaviour
     private void AssignTaskList()
     {
         playerData.filteredList = list;
+    }
+
+    private void AssignCostumeData()
+    {
+        for (int i = 0; i < playerData.costumeList.Count; i++)
+        {
+            CostumeType parsed_enum = (CostumeType)System.Enum.Parse(typeof(CostumeType), playerData.costumeList[i]);
+            costumeData.list.Add(parsed_enum);
+        }
     }
 
     public void ResetPlayerDataTasks()

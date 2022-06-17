@@ -18,6 +18,8 @@ public class OnLoad : MonoBehaviour
     private int currentTaskMonthInt;
     private int currentTaskDayInt;
 
+    public CostumeData costumeData;
+
     private void Start()
     {
         string currentDate = System.DateTime.UtcNow.ToLocalTime().ToString("yyyy MM dd");
@@ -93,5 +95,11 @@ public class OnLoad : MonoBehaviour
         }
 
 
+
+        for (int i = 0; i < playerData.costumeList.Count; i++)
+        {
+            CostumeType parsed_enum = (CostumeType)System.Enum.Parse(typeof(CostumeType), playerData.costumeList[i]);
+            costumeData.list.Add(parsed_enum);
+        }
     }
 }

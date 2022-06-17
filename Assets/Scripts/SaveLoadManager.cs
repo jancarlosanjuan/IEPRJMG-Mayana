@@ -47,10 +47,12 @@ public class SaveLoadManager : MonoBehaviour
 
             playerData.hp = 10;
             playerData.food = 10;
-            playerData.money = 0;
+            playerData.money = 1000;
             playerData.completedTasks = 0;
             playerData.overduedTasks = 0;
             playerData.filteredList = list;
+            playerData.costumeList.Clear();
+
 
             onSave.Invoke();
             SceneManager.LoadScene("PetSelectionScene");

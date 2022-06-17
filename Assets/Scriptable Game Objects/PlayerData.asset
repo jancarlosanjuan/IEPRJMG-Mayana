@@ -23,3 +23,4 @@ MonoBehaviour:
   completedTasks: 0
   overduedTasks: 12
   filteredList: {fileID: 11400000, guid: 6adbe7e90326e964b9b5c34cedb6570b, type: 2}
+  costumeListData: {fileID: 11400000, guid: e07fe8352c771464c8ee3fd105e9514d, type: 2}

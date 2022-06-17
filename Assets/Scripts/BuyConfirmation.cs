@@ -60,11 +60,10 @@ public class BuyConfirmation : MonoBehaviour
         if(item.type == ItemType.Costume)
         {
             data.list.Add(item.costumeType);
+            playerData.PopulateCostumeList(data);
             onCheckForCostumes.Invoke();
             data.UpdateReadOnly();
         }
-
-       
     }
 
     public void HidePanels()

@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e7ed48b8e6ca3c478747bf5854b2f9a, type: 3}
   m_Name: CostumeData
   m_EditorClassIdentifier: 
+  readOnly: 02000000
