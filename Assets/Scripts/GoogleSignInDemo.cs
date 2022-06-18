@@ -58,6 +58,8 @@ public class GoogleSignInDemo : MonoBehaviour
         gameManager.filePath = Application.persistentDataPath + "/";
         gameManager.fileName = "data.json";
 
+        googleUserEmailTXT.text = gameManager.filePath + "\n" + gameManager.fileName;
+
         CheckFirebaseDependencies();
     }
 
@@ -389,10 +391,6 @@ public class GoogleSignInDemo : MonoBehaviour
             Debug.Log("Created JSON data");
             File.WriteAllText(gameManager.filePath + gameManager.fileName, emptyJson);
         }
-
-        
-
-
 
         //
         {
