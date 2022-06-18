@@ -20,6 +20,7 @@ public class GoogleSignInDemo : MonoBehaviour
     [SerializeField] TMP_Text googleUserEmailTXT;
 
     [SerializeField] private ScriptableGameOBJ playerData;
+    [SerializeField] private CostumeData costumeData;
     // [SerializeField] Text infoText;
 
     private FirebaseAuth auth;
@@ -635,7 +636,14 @@ public class GoogleSignInDemo : MonoBehaviour
             playerData.hp = account.hp;
             playerData.food = account.food;
             playerData.money = account.money;
+
             //playerData.costumeList = account.costumeList; //ALJON
+            for (int i = 0; i < account.costumeList.Count; i++)
+            {
+                CostumeType type = (CostumeType)System.Enum.Parse(typeof(CostumeType), account.costumeList[i]);
+                costumeData.list.Add(type);
+            }
+
             LoadPlayerTasksFromJSON(account, email);
 
         }
@@ -755,9 +763,6 @@ public class GoogleSignInDemo : MonoBehaviour
 
         return -1;
     }
-
-
-
 
 
     private void SignInWithGoogleOnFirebase(string idToken)
