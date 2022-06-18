@@ -57,18 +57,18 @@ public class GoogleSignInDemo : MonoBehaviour
 
     void OnApplicationFocus(bool hasFocus)
     {
-        updateJSONonAction(gameManager.GoogleUser.Email);
+        //updateJSONonAction(gameManager.GoogleUser.Email);
     }
 
     
     void OnApplicationQuit()
     {
-        updateJSONonAction(gameManager.GoogleUser.Email);
+        //updateJSONonAction(gameManager.GoogleUser.Email);
     }
 
     void OnApplicationPause(bool pauseStatus)
     {
-        updateJSONonAction(gameManager.GoogleUser.Email);
+        //updateJSONonAction(gameManager.GoogleUser.Email);
     }
 
     private void CheckFirebaseDependencies()
@@ -241,9 +241,8 @@ public class GoogleSignInDemo : MonoBehaviour
                         
                         //load stuff
                         LoadPlayerDataFromJSON(gameManager.GoogleUser.Email);
-                        
-                        //onUserSuccessfulSignIn.Invoke();
-
+                        onUserSuccessfulSignIn.Invoke();
+                        Debug.Log("IN");
                     }
                     else
                     {
