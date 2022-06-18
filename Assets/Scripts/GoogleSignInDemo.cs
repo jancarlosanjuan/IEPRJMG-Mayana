@@ -119,10 +119,6 @@ public class GoogleSignInDemo : MonoBehaviour
             txtpro.text = $"Successfully logged in!\nEmail:{googleUser.Email}\nAuth code: {googleUser.AuthCode}";
 
             StartCoroutine(Test());
-
-            // save email here (will serve as unique id of user)
-            googleUserEmailTXT.text = googleUser.Email;
-
         }
     }
 
