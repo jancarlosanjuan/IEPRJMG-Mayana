@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+
 
 public class OnSave : MonoBehaviour
 {
@@ -24,8 +26,13 @@ public class OnSave : MonoBehaviour
 
     public void SaveJSON()
     {
-        mobilePath = Application.persistentDataPath;
-        string json = JsonUtility.ToJson(playerData);
-        File.WriteAllText(mobilePath + "/" + gameManager.GoogleUser.Email + ".json", json);
+        mobilePath = System.IO.Directory.GetCurrentDirectory();
+        Debug.Log("Data Path: "  + mobilePath);
+
+
+        //string json = JsonUtility.ToJson(playerData);
+        //string json = "testing";
+
+        //File.WriteAllText(mobilePath + "/" + "testjson" + ".json", json);
     }
 }
