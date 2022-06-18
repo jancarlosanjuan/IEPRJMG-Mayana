@@ -123,50 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &41481116
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 41481118}
-  - component: {fileID: 41481117}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &41481117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 41481116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1af135f8ea62374980ca3a43504eab7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &41481118
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 41481116}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &85647370
 GameObject:
   m_ObjectHideFlags: 0
@@ -1523,11 +1479,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 095e9b1eaab8040488e6c76b4617bc0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 41481117}
+  gameManager: {fileID: 11400000, guid: 7e37326f18fbf6947a7b60480d406844, type: 2}
   webClientId: 962649025840-rsj8lgl6h2ate7u8od6h1lagpn6okq50.apps.googleusercontent.com
   txtpro: {fileID: 1286608695}
   googleUserEmailTXT: {fileID: 0}
-  list: {fileID: 11400000, guid: 6adbe7e90326e964b9b5c34cedb6570b, type: 2}
+  playerData: {fileID: 11400000, guid: 97b8c80f80bc9474db064b33cd7ee1fb, type: 2}
+  costumeData: {fileID: 11400000, guid: e07fe8352c771464c8ee3fd105e9514d, type: 2}
+  accountsListSerialized_MAIN:
+    accountsSerialized: []
+  currentLoggedInTask:
+    taskListId: 
+    taskId: 
+    title: 
+    notes: 
+    status: 
+    dueDate: 
+    isListedAsComplete: 0
+    isListedAsOverDue: 0
+  calledTaskListIDs: []
+  calledTaskIDs: []
   onUserSuccessfulSignIn: {fileID: 11400000, guid: 345baf8dca2bbec4793c6c6c9764464c, type: 2}
 --- !u!4 &1321185294
 Transform:
@@ -1576,7 +1546,7 @@ Transform:
   - {fileID: 1752275762}
   - {fileID: 1760726762}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1597236549
 MonoBehaviour:
@@ -1590,7 +1560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dedd2a6c94461746a22cf8a3f01d4ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 41481117}
+  gameManager: {fileID: 11400000, guid: 7e37326f18fbf6947a7b60480d406844, type: 2}
   onUserSuccessfulSignIn: {fileID: 11400000, guid: 345baf8dca2bbec4793c6c6c9764464c, type: 2}
   playerData: {fileID: 11400000, guid: 97b8c80f80bc9474db064b33cd7ee1fb, type: 2}
   list: {fileID: 11400000, guid: 6adbe7e90326e964b9b5c34cedb6570b, type: 2}
@@ -1643,7 +1613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc2a61640d3e72f4bbac630817ae6c08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 41481117}
+  gameManager: {fileID: 0}
   playerData: {fileID: 11400000, guid: 97b8c80f80bc9474db064b33cd7ee1fb, type: 2}
   mobilePath: 
   onSave: {fileID: 11400000, guid: f7956febf736003429f658fd393a6ddd, type: 2}
@@ -1691,7 +1661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee3ad99ac0e9ed746a8fc629dbcedabc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 41481117}
+  gameManager: {fileID: 0}
   playerData: {fileID: 11400000, guid: 97b8c80f80bc9474db064b33cd7ee1fb, type: 2}
   mobilePath: 
   costumeData: {fileID: 11400000, guid: e07fe8352c771464c8ee3fd105e9514d, type: 2}

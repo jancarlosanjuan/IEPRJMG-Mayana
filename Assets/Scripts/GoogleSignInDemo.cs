@@ -36,9 +36,6 @@ public class GoogleSignInDemo : MonoBehaviour
     public List<string> calledTaskListIDs = new List<string>();
     public List<string> calledTaskIDs = new List<string>();
 
-    private string filePath;
-    private string fileName;
-
 
     public TriggerEvent onUserSuccessfulSignIn;
 
@@ -58,33 +55,10 @@ public class GoogleSignInDemo : MonoBehaviour
             }
         };
 
-        filePath = Application.persistentDataPath + "/";
-        fileName = "data.json";
+        gameManager.filePath = Application.persistentDataPath + "/";
+        gameManager.fileName = "data.json";
 
         CheckFirebaseDependencies();
-    }
-
-    private void Start()
-    {
-        
-    }
-    void OnApplicationFocus(bool hasFocus)
-    {
-        //if(gameManager.GoogleUser.Email != null)
-        //updateJSONonAction(gameManager.GoogleUser.Email);
-    }
-
-    
-    void OnApplicationQuit()
-    {
-        //if (gameManager.GoogleUser.Email != null)
-            //updateJSONonAction(gameManager.GoogleUser.Email);
-    }
-
-    void OnApplicationPause(bool pauseStatus)
-    {
-       // if (gameManager.GoogleUser.Email != null)
-            //updateJSONonAction(gameManager.GoogleUser.Email);
     }
 
     private void CheckFirebaseDependencies()
@@ -282,7 +256,7 @@ public class GoogleSignInDemo : MonoBehaviour
         List<string> uncalledTaskListIDs = new List<string>();
         List<string> uncalledTaskIDs = new List<string>();
 
-        string json = File.ReadAllText(filePath + fileName);
+        string json = File.ReadAllText(gameManager.filePath + gameManager.fileName);
         AccountsListSerialized accountsListSerialized = JsonUtility.FromJson<AccountsListSerialized>(json);
 
         int emailIndex = FindEmailIndexInJSON(accountsListSerialized, email);
@@ -377,7 +351,7 @@ public class GoogleSignInDemo : MonoBehaviour
             }
 
 
-            updateJSONfile(accountsListSerialized, filePath, fileName);
+            updateJSONfile(accountsListSerialized, gameManager.filePath, gameManager.fileName);
 
         }
 
@@ -399,7 +373,7 @@ public class GoogleSignInDemo : MonoBehaviour
         AccountsListSerialized accountsListSerialized;
 
         //check if file exists
-        bool test = File.Exists(filePath + fileName);
+        bool test = File.Exists(gameManager.filePath + gameManager.fileName);
         //Debug.Log("Bool: " + test + "  Name:  " + filePath+fileName);
         //TaskList tl = JsonUtility.FromJson<TaskList>()
 
@@ -411,7 +385,7 @@ public class GoogleSignInDemo : MonoBehaviour
             accountsListSerialized_MAIN.accountsSerialized.Add(CreateNewAccountSerialized(email, tasklistid));
             string emptyJson = JsonUtility.ToJson(accountsListSerialized_MAIN, true);
             Debug.Log("Created JSON data");
-            File.WriteAllText(filePath + fileName, emptyJson);
+            File.WriteAllText(gameManager.filePath + gameManager.fileName, emptyJson);
         }
 
         
@@ -421,7 +395,7 @@ public class GoogleSignInDemo : MonoBehaviour
         //
         {
             //open
-            string json = File.ReadAllText(filePath+fileName);
+            string json = File.ReadAllText(gameManager.filePath + gameManager.fileName);
             accountsListSerialized = JsonUtility.FromJson<AccountsListSerialized>(json);
             //Debug.Log("JSON: " + jsonFileRead.Email + " " +jsonFileRead.tasksListSerialized[0].tasks[0]);
 
@@ -511,7 +485,7 @@ public class GoogleSignInDemo : MonoBehaviour
             }
         }
 
-        updateJSONfile(accountsListSerialized, filePath, fileName);
+        updateJSONfile(accountsListSerialized, gameManager.filePath, gameManager.fileName);
     }
 
     public bool checkIfDueDateIsLate(string date)
@@ -622,7 +596,7 @@ public class GoogleSignInDemo : MonoBehaviour
     {
         
 
-          string json = File.ReadAllText(filePath + fileName);
+          string json = File.ReadAllText(gameManager.filePath + gameManager.fileName);
           AccountsListSerialized accountsListSerialized = JsonUtility.FromJson<AccountsListSerialized>(json);
 
 
@@ -663,30 +637,7 @@ public class GoogleSignInDemo : MonoBehaviour
         }
     }
 
-    public void updateJSONonAction(string email)
-    {
-        string json = File.ReadAllText(filePath + fileName);
-        AccountsListSerialized accountsListSerialized = JsonUtility.FromJson<AccountsListSerialized>(json);
-
-
-        int emailIndex = FindEmailIndexInJSON(accountsListSerialized, email);
-        if (emailIndex != -1)
-        {
-            AccountSerialized account = accountsListSerialized.accountsSerialized[emailIndex];
-
-            account.selectedPetName = playerData.selectedPetName;
-            account.selectedBGName = playerData.selectedBGName;
-            account.hp = playerData.hp;
-            account.food = playerData.food;
-            account.money = playerData.money;
-            account.costumeList = playerData.costumeList;
-
-
-            updateJSONfile(accountsListSerialized, filePath, fileName);
-        }
-
-
-    }
+   
 
     public TaskListSerialized CreateTaskListSerialized(Task curTask) //should be currenttask lang!!!
     {

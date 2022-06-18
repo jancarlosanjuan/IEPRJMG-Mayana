@@ -13,15 +13,17 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   emailID: 
-  selectedPet: {fileID: 2875515538392243185, guid: 1c3694436b9e5b84bae2c02362f02b13, type: 3}
-  selectedPetName: Cat2
-  selectedBG: {fileID: 6074210040020745883, guid: ab7aca0fe6fbe7b40a36b297a5b17213, type: 3}
-  selectedBGName: BG3
+  selectedPet: {fileID: 6171788399823339091, guid: 471e242899fffe14eaf4bb0587089f7a, type: 3}
+  selectedPetName: Cat1
+  selectedBG: {fileID: 4693942351460745014, guid: a9f6885e936ec1049982e85fef9400be, type: 3}
+  selectedBGName: BG1
   hp: 3
   food: 0
-  money: 999869
+  money: 999679
   completedTasks: 0
   overduedTasks: 0
   filteredList: {fileID: 11400000, guid: 6adbe7e90326e964b9b5c34cedb6570b, type: 2}
   costumeList:
   - Police
+  - Dinosaur
+  - Angel
