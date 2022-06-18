@@ -14,7 +14,6 @@ public class GoogleSignInDemo : MonoBehaviour
     [SerializeField] GameManager gameManager;
     [SerializeField] string webClientId = "<your client id here>";
     [SerializeField] TMP_Text txtpro;
-    [SerializeField] TMP_Text googleUserEmailTXT;
     // [SerializeField] Text infoText;
 
     private FirebaseAuth auth;
