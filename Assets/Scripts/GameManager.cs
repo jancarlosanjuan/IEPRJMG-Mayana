@@ -1,10 +1,14 @@
 using Google;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
-{
-    public GoogleSignInUser GoogleUser { get; set; }
 
-    public string AccessToken { get; set; }
-    public string RefreshToken { get; set; }
+[CreateAssetMenu(fileName = "New Game Manager",
+                 menuName = "Scriptable OBJ/ New Game Manager")]
+public class GameManager : ScriptableObject
+{
+    public GoogleSignInUser GoogleUser;
+    public string AccessToken;
+    public string RefreshToken;
+    public string filePath;
+    public string fileName;
 }

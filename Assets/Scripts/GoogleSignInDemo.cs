@@ -10,7 +10,6 @@ using JetBrains.Annotations;
 using SimpleJSON;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 
 public class GoogleSignInDemo : MonoBehaviour
@@ -18,8 +17,10 @@ public class GoogleSignInDemo : MonoBehaviour
     [SerializeField] GameManager gameManager;
     [SerializeField] string webClientId = "<your client id here>";
     [SerializeField] TMP_Text txtpro;
+    [SerializeField] TMP_Text googleUserEmailTXT;
 
     [SerializeField] private ScriptableGameOBJ playerData;
+    [SerializeField] private CostumeData costumeData;
     // [SerializeField] Text infoText;
 
     private FirebaseAuth auth;
@@ -34,9 +35,6 @@ public class GoogleSignInDemo : MonoBehaviour
     //for updating the deleted stuff in json
     public List<string> calledTaskListIDs = new List<string>();
     public List<string> calledTaskIDs = new List<string>();
-
-    private string filePath;
-    private string fileName;
 
 
     public TriggerEvent onUserSuccessfulSignIn;
@@ -57,33 +55,12 @@ public class GoogleSignInDemo : MonoBehaviour
             }
         };
 
-        filePath = Application.persistentDataPath + "/";
-        fileName = "data.json";
+        gameManager.filePath = Application.persistentDataPath + "/";
+        gameManager.fileName = "data.json";
+
+        googleUserEmailTXT.text = gameManager.filePath + "\n" + gameManager.fileName;
 
         CheckFirebaseDependencies();
-    }
-
-    private void Start()
-    {
-        
-    }
-    void OnApplicationFocus(bool hasFocus)
-    {
-        //if(gameManager.GoogleUser.Email != null)
-        //updateJSONonAction(gameManager.GoogleUser.Email);
-    }
-
-    
-    void OnApplicationQuit()
-    {
-        //if (gameManager.GoogleUser.Email != null)
-            //updateJSONonAction(gameManager.GoogleUser.Email);
-    }
-
-    void OnApplicationPause(bool pauseStatus)
-    {
-       // if (gameManager.GoogleUser.Email != null)
-            //updateJSONonAction(gameManager.GoogleUser.Email);
     }
 
     private void CheckFirebaseDependencies()
@@ -166,6 +143,10 @@ public class GoogleSignInDemo : MonoBehaviour
             //txtpro.text = $"Successfully logged in!\nEmail:{googleUser.Email}\nAuth code: {googleUser.AuthCode}";
 
             StartCoroutine(Test());
+
+            // save email here (will serve as unique id of user)
+            //googleUserEmailTXT.text = googleUser.Email;
+
         }
     }
 
@@ -240,6 +221,8 @@ public class GoogleSignInDemo : MonoBehaviour
 
                             //check to validate some stuff
                             validateSaveDataFile(gameManager.GoogleUser.Email, currentLoggedInTask.taskListId,currentLoggedInTask.taskId);
+
+                            //txtpro.text += $"\nTitle: {task.title}\nTask ID: {task.taskId}\nNotes: {task.notes}\nStatus: {task.status}\nDue Date: {task.dueDate}";
                         }
 
                         //force update unused data in json
@@ -247,18 +230,10 @@ public class GoogleSignInDemo : MonoBehaviour
                         
                         //load stuff
                         LoadPlayerDataFromJSON(gameManager.GoogleUser.Email);
+                        
+                        //onUserSuccessfulSignIn.Invoke();
+                        //updateJSONfile(accountsListSerialized, filePath, fileName);
 
-                        // Change Scene here
-
-                        if (playerData.selectedPetName == "someName")
-                        {
-                            SceneManager.LoadScene("PetSelectionScene");
-                        }
-
-                        else
-                        {
-                            SceneManager.LoadScene("GameScene");
-                        }
                     }
                     else
                     {
@@ -283,7 +258,7 @@ public class GoogleSignInDemo : MonoBehaviour
         List<string> uncalledTaskListIDs = new List<string>();
         List<string> uncalledTaskIDs = new List<string>();
 
-        string json = File.ReadAllText(filePath + fileName);
+        string json = File.ReadAllText(gameManager.filePath + gameManager.fileName);
         AccountsListSerialized accountsListSerialized = JsonUtility.FromJson<AccountsListSerialized>(json);
 
         int emailIndex = FindEmailIndexInJSON(accountsListSerialized, email);
@@ -352,6 +327,7 @@ public class GoogleSignInDemo : MonoBehaviour
                             t.Remove(t[k]);
                             //t.RemoveAt(k);
                             isFound = true;
+                            googleUserEmailTXT.text = "removed a task";
                             break;
                         }
                     }
@@ -371,6 +347,7 @@ public class GoogleSignInDemo : MonoBehaviour
                     {
                         tls[j] = null;
                         tls.Remove(tls[j]);
+                        googleUserEmailTXT.text = "removed a tasklist";
                         //tls.RemoveAt(j);
                         break;
                     }
@@ -378,7 +355,7 @@ public class GoogleSignInDemo : MonoBehaviour
             }
 
 
-            updateJSONfile(accountsListSerialized, filePath, fileName);
+            updateJSONfile(accountsListSerialized, gameManager.filePath, gameManager.fileName);
 
         }
 
@@ -400,7 +377,7 @@ public class GoogleSignInDemo : MonoBehaviour
         AccountsListSerialized accountsListSerialized;
 
         //check if file exists
-        bool test = File.Exists(filePath + fileName);
+        bool test = File.Exists(gameManager.filePath + gameManager.fileName);
         //Debug.Log("Bool: " + test + "  Name:  " + filePath+fileName);
         //TaskList tl = JsonUtility.FromJson<TaskList>()
 
@@ -412,13 +389,13 @@ public class GoogleSignInDemo : MonoBehaviour
             accountsListSerialized_MAIN.accountsSerialized.Add(CreateNewAccountSerialized(email, tasklistid));
             string emptyJson = JsonUtility.ToJson(accountsListSerialized_MAIN, true);
             Debug.Log("Created JSON data");
-            File.WriteAllText(filePath + fileName, emptyJson);
+            File.WriteAllText(gameManager.filePath + gameManager.fileName, emptyJson);
         }
 
-       
+        //
         {
             //open
-            string json = File.ReadAllText(filePath+fileName);
+            string json = File.ReadAllText(gameManager.filePath + gameManager.fileName);
             accountsListSerialized = JsonUtility.FromJson<AccountsListSerialized>(json);
             //Debug.Log("JSON: " + jsonFileRead.Email + " " +jsonFileRead.tasksListSerialized[0].tasks[0]);
 
@@ -446,6 +423,7 @@ public class GoogleSignInDemo : MonoBehaviour
                     //task exists
                     if (taskindex != -1)
                     {
+                        googleUserEmailTXT.text = "UPDATING TASKS....";
                         bool didUpdate = false;
                         bool didStatusChange = false;
                         //update tasks
@@ -507,7 +485,7 @@ public class GoogleSignInDemo : MonoBehaviour
             }
         }
 
-        updateJSONfile(accountsListSerialized, filePath, fileName);
+        updateJSONfile(accountsListSerialized, gameManager.filePath, gameManager.fileName);
     }
 
     public bool checkIfDueDateIsLate(string date)
@@ -618,7 +596,7 @@ public class GoogleSignInDemo : MonoBehaviour
     {
         
 
-          string json = File.ReadAllText(filePath + fileName);
+          string json = File.ReadAllText(gameManager.filePath + gameManager.fileName);
           AccountsListSerialized accountsListSerialized = JsonUtility.FromJson<AccountsListSerialized>(json);
 
 
@@ -632,7 +610,14 @@ public class GoogleSignInDemo : MonoBehaviour
             playerData.hp = account.hp;
             playerData.food = account.food;
             playerData.money = account.money;
+
             //playerData.costumeList = account.costumeList; //ALJON
+            for (int i = 0; i < account.costumeList.Count; i++)
+            {
+                CostumeType type = (CostumeType)System.Enum.Parse(typeof(CostumeType), account.costumeList[i]);
+                costumeData.list.Add(type);
+            }
+
             LoadPlayerTasksFromJSON(account, email);
 
         }
@@ -652,30 +637,7 @@ public class GoogleSignInDemo : MonoBehaviour
         }
     }
 
-    public void updateJSONonAction(string email)
-    {
-        string json = File.ReadAllText(filePath + fileName);
-        AccountsListSerialized accountsListSerialized = JsonUtility.FromJson<AccountsListSerialized>(json);
-
-
-        int emailIndex = FindEmailIndexInJSON(accountsListSerialized, email);
-        if (emailIndex != -1)
-        {
-            AccountSerialized account = accountsListSerialized.accountsSerialized[emailIndex];
-
-            account.selectedPetName = playerData.selectedPetName;
-            account.selectedBGName = playerData.selectedBGName;
-            account.hp = playerData.hp;
-            account.food = playerData.food;
-            account.money = playerData.money;
-            account.costumeList = playerData.costumeList;
-
-
-            updateJSONfile(accountsListSerialized, filePath, fileName);
-        }
-
-
-    }
+   
 
     public TaskListSerialized CreateTaskListSerialized(Task curTask) //should be currenttask lang!!!
     {
@@ -752,9 +714,6 @@ public class GoogleSignInDemo : MonoBehaviour
 
         return -1;
     }
-
-
-
 
 
     private void SignInWithGoogleOnFirebase(string idToken)
