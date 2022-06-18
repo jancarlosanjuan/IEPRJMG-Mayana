@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using SimpleJSON;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 
 public class GoogleSignInDemo : MonoBehaviour
@@ -17,7 +18,6 @@ public class GoogleSignInDemo : MonoBehaviour
     [SerializeField] GameManager gameManager;
     [SerializeField] string webClientId = "<your client id here>";
     [SerializeField] TMP_Text txtpro;
-    [SerializeField] TMP_Text googleUserEmailTXT;
 
     [SerializeField] private ScriptableGameOBJ playerData;
     // [SerializeField] Text infoText;
@@ -166,10 +166,6 @@ public class GoogleSignInDemo : MonoBehaviour
             //txtpro.text = $"Successfully logged in!\nEmail:{googleUser.Email}\nAuth code: {googleUser.AuthCode}";
 
             StartCoroutine(Test());
-
-            // save email here (will serve as unique id of user)
-            //googleUserEmailTXT.text = googleUser.Email;
-
         }
     }
 
@@ -244,8 +240,6 @@ public class GoogleSignInDemo : MonoBehaviour
 
                             //check to validate some stuff
                             validateSaveDataFile(gameManager.GoogleUser.Email, currentLoggedInTask.taskListId,currentLoggedInTask.taskId);
-
-                            //txtpro.text += $"\nTitle: {task.title}\nTask ID: {task.taskId}\nNotes: {task.notes}\nStatus: {task.status}\nDue Date: {task.dueDate}";
                         }
 
                         //force update unused data in json
@@ -253,10 +247,18 @@ public class GoogleSignInDemo : MonoBehaviour
                         
                         //load stuff
                         LoadPlayerDataFromJSON(gameManager.GoogleUser.Email);
-                        
-                        //onUserSuccessfulSignIn.Invoke();
-                        //updateJSONfile(accountsListSerialized, filePath, fileName);
 
+                        // Change Scene here
+
+                        if (playerData.selectedPetName == "someName")
+                        {
+                            SceneManager.LoadScene("PetSelectionScene");
+                        }
+
+                        else
+                        {
+                            SceneManager.LoadScene("GameScene");
+                        }
                     }
                     else
                     {
@@ -350,7 +352,6 @@ public class GoogleSignInDemo : MonoBehaviour
                             t.Remove(t[k]);
                             //t.RemoveAt(k);
                             isFound = true;
-                            googleUserEmailTXT.text = "removed a task";
                             break;
                         }
                     }
@@ -370,7 +371,6 @@ public class GoogleSignInDemo : MonoBehaviour
                     {
                         tls[j] = null;
                         tls.Remove(tls[j]);
-                        googleUserEmailTXT.text = "removed a tasklist";
                         //tls.RemoveAt(j);
                         break;
                     }
@@ -415,11 +415,7 @@ public class GoogleSignInDemo : MonoBehaviour
             File.WriteAllText(filePath + fileName, emptyJson);
         }
 
-        
-
-
-
-        //
+       
         {
             //open
             string json = File.ReadAllText(filePath+fileName);
@@ -450,7 +446,6 @@ public class GoogleSignInDemo : MonoBehaviour
                     //task exists
                     if (taskindex != -1)
                     {
-                        googleUserEmailTXT.text = "UPDATING TASKS....";
                         bool didUpdate = false;
                         bool didStatusChange = false;
                         //update tasks

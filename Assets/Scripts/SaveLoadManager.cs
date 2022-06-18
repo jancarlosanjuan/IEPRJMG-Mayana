@@ -31,7 +31,7 @@ public class SaveLoadManager : MonoBehaviour
     public void OnCheckUserExist()
     {
         mobilePath = Application.persistentDataPath;
-        if (File.Exists(mobilePath + "/" + gameManager.GoogleUser.Email + ".json"))
+        if (File.Exists(mobilePath + "/" + "data.json"))
         {
             //onLoad.Invoke();
             SceneManager.LoadScene("GameScene");
