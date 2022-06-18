@@ -346,6 +346,7 @@ public class GoogleSignInDemo : MonoBehaviour
                     {
                         if (temp == t[k].taskId)
                         {
+                            t[k] = null;
                             t.Remove(t[k]);
                             //t.RemoveAt(k);
                             isFound = true;
@@ -362,11 +363,12 @@ public class GoogleSignInDemo : MonoBehaviour
             }
             for (int i = 0; i < uncalledTaskListIDs.Count; i++)
             {
-                string temp = uncalledTaskIDs[i];
+                string temp = uncalledTaskListIDs[i];
                 for (int j = 0; j < tls.Count; j++)
                 {
-                    if (tls[j].tasks[0].taskId == temp)
+                    if (tls[j].tasks[0].taskListId == temp)
                     {
+                        tls[j] = null;
                         tls.Remove(tls[j]);
                         googleUserEmailTXT.text = "removed a tasklist";
                         //tls.RemoveAt(j);
