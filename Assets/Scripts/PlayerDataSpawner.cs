@@ -90,11 +90,14 @@ public class PlayerDataSpawner : MonoBehaviour
             }
         }
 
-        Instantiate(selectedPetOBJ);
-        Instantiate(selectedBGOBJ);
-
         // SAVE
         SaveData();
+    }
+
+    private void Start()
+    {
+        Instantiate(selectedPetOBJ);
+        Instantiate(selectedBGOBJ);
     }
 
     void OnApplicationQuit()
