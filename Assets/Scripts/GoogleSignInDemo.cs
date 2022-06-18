@@ -17,7 +17,6 @@ public class GoogleSignInDemo : MonoBehaviour
     [SerializeField] GameManager gameManager;
     [SerializeField] string webClientId = "<your client id here>";
     [SerializeField] TMP_Text txtpro;
-    [SerializeField] TMP_Text googleUserEmailTXT;
 
     [SerializeField] private ScriptableGameOBJ playerData;
     // [SerializeField] Text infoText;
@@ -152,9 +151,6 @@ public class GoogleSignInDemo : MonoBehaviour
             txtpro.text = $"Successfully logged in!\nEmail:{googleUser.Email}\nAuth code: {googleUser.AuthCode}";
 
             StartCoroutine(Test());
-
-            // save email here (will serve as unique id of user)
-            googleUserEmailTXT.text = googleUser.Email;
 
         }
     }

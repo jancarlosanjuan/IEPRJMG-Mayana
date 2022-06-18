@@ -40,6 +40,7 @@ public class SaveLoadManager : MonoBehaviour
         else
         {
             // create & set player data
+            /*
             playerData.emailID = gameManager.GoogleUser.Email;
 
             playerData.hp = 10;
@@ -49,8 +50,8 @@ public class SaveLoadManager : MonoBehaviour
             playerData.overduedTasks = 0;
             playerData.filteredList = list;
             playerData.costumeList.Clear();
-
             onSave.Invoke();
+            */
             SceneManager.LoadScene("PetSelectionScene");
         }
     }

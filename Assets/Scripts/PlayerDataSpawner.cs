@@ -27,7 +27,7 @@ public class PlayerDataSpawner : MonoBehaviour
     private int currentTaskMonthInt;
     private int currentTaskDayInt;
 
-    private void Awake()
+    private void Start()
     {
         string currentDate = System.DateTime.UtcNow.ToLocalTime().ToString("yyyy MM dd");
 
@@ -92,10 +92,7 @@ public class PlayerDataSpawner : MonoBehaviour
 
         // SAVE
         SaveData();
-    }
 
-    private void Start()
-    {
         Instantiate(selectedPetOBJ);
         Instantiate(selectedBGOBJ);
     }

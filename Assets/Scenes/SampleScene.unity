@@ -1526,8 +1526,21 @@ MonoBehaviour:
   gameManager: {fileID: 41481117}
   webClientId: 962649025840-rsj8lgl6h2ate7u8od6h1lagpn6okq50.apps.googleusercontent.com
   txtpro: {fileID: 1286608695}
-  googleUserEmailTXT: {fileID: 0}
-  list: {fileID: 11400000, guid: 6adbe7e90326e964b9b5c34cedb6570b, type: 2}
+  googleUserEmailTXT: {fileID: 85647372}
+  playerData: {fileID: 11400000, guid: 97b8c80f80bc9474db064b33cd7ee1fb, type: 2}
+  accountsListSerialized:
+    accountsSerialized: []
+  currentLoggedInTask:
+    taskListId: 
+    taskId: 
+    title: 
+    notes: 
+    status: 
+    dueDate: 
+    isListedAsComplete: 0
+    isListedAsOverDue: 0
+  calledTaskListIDs: []
+  calledTaskIDs: []
   onUserSuccessfulSignIn: {fileID: 11400000, guid: 345baf8dca2bbec4793c6c6c9764464c, type: 2}
 --- !u!4 &1321185294
 Transform:
