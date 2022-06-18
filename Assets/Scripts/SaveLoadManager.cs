@@ -42,9 +42,6 @@ public class SaveLoadManager : MonoBehaviour
             // create & set player data
             playerData.emailID = gameManager.GoogleUser.Email;
 
-            playerData.selectedPet = selectedPet;
-            playerData.selectedBG = selectedBG;
-
             playerData.hp = 10;
             playerData.food = 10;
             playerData.money = 1000;

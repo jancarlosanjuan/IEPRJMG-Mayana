@@ -10,6 +10,7 @@ public class BGSelectionManager : MonoBehaviour
     private bool isButtonPressed = false;
 
     public List<Sprite> spriteList = new List<Sprite>();
+    public List<GameObject> petList = new List<GameObject>();
     public List<GameObject> bgList = new List<GameObject>();
 
     public GameObject choosenBG;
@@ -17,10 +18,13 @@ public class BGSelectionManager : MonoBehaviour
 
     public string mobilePath;
 
+    private GameObject petObject;
+
     private void Start()
     {
-        Debug.Log(playerData.selectedPet.name);
-        Instantiate(playerData.selectedPet);
+        AssignSelectedPet();
+        Debug.Log(petObject.name);
+        Instantiate(petObject);
     }
 
     public void Update()
@@ -48,16 +52,8 @@ public class BGSelectionManager : MonoBehaviour
 
     public void ConfirmBG()
     {
-        // make this into scriptable object
-        if (playerData.selectedBG.GetComponent<SpriteRenderer>())
-            playerData.selectedBG.GetComponent<SpriteRenderer>().sprite = spriteList[selectedSprite];
-
-        if (playerData.selectedBG != null)
-        {
-            playerData.selectedBG = null;
-            playerData.selectedBG = bgList[selectedSprite];
-            playerData.selectedBGName = bgList[selectedSprite].name;
-        }
+            
+        playerData.selectedBGName = bgList[selectedSprite].name;
 
         // SAVE DATA
         SaveSelectedOBJs();
@@ -66,15 +62,8 @@ public class BGSelectionManager : MonoBehaviour
 
     public void BackToPetSelection()
     {
-        if (playerData.selectedBG.GetComponent<SpriteRenderer>())
-            playerData.selectedBG.GetComponent<SpriteRenderer>().sprite = spriteList[selectedSprite];
-
-        if (playerData.selectedBG != null)
-        {
-            playerData.selectedBG = null;
-            playerData.selectedBG = bgList[selectedSprite];
-            playerData.selectedBGName = bgList[selectedSprite].name;
-        }
+        playerData.selectedBGName = bgList[selectedSprite].name;
+        // delete?
 
         SceneManager.LoadScene("PetSelectionScene");
     }
@@ -84,5 +73,35 @@ public class BGSelectionManager : MonoBehaviour
         mobilePath = Application.persistentDataPath;
         string json = JsonUtility.ToJson(playerData);
         File.WriteAllText(mobilePath + "/" + playerData.emailID + ".json", json);
+    }
+
+    private void AssignSelectedPet()
+    {
+        switch (playerData.selectedPetName)
+        {
+            case "Cat1":
+                petObject = petList[0];
+                break;
+
+            case "Cat2":
+                petObject = petList[1];
+                break;
+
+            case "Cat3":
+                petObject = petList[2];
+                break;
+
+            case "Dog1":
+                petObject = petList[3];
+                break;
+
+            case "Dog2":
+                petObject = petList[4];
+                break;
+
+            case "Dog3":
+                petObject = petList[5];
+                break;
+        }
     }
 }

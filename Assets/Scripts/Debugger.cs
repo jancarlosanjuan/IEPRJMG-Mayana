@@ -7,7 +7,7 @@ public class Debugger : MonoBehaviour
     public ScriptableGameOBJ playerData;
     private void Start()
     {
-        Debug.Log(playerData.selectedPet.name);
-        Debug.Log(playerData.selectedBG.name);
+        //Debug.Log(playerData.selectedPet.name);
+        //Debug.Log(playerData.selectedBG.name);
     }
 }

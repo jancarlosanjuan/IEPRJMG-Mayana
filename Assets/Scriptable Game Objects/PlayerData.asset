@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   emailID: 
-  selectedPet: {fileID: 2875515538392243185, guid: 1c3694436b9e5b84bae2c02362f02b13, type: 3}
   selectedPetName: Cat2
-  selectedBG: {fileID: 3748302089630572121, guid: 4de9dd28807f76b4b80e81d4aa1dd4a3, type: 3}
-  selectedBGName: BG2
+  selectedBGName: BG1
   hp: 10
   food: 10
-  money: 999969
+  money: 999869
   completedTasks: 0
   overduedTasks: 0
   filteredList: {fileID: 11400000, guid: 6adbe7e90326e964b9b5c34cedb6570b, type: 2}
-  costumeList: []
+  costumeList:
+  - Dinosaur

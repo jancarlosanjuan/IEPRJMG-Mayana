@@ -15,6 +15,9 @@ public class PlayerDataSpawner : MonoBehaviour
     public TaskList list;
     public CostumeData costumeData;
 
+    private GameObject selectedPetOBJ;
+    private GameObject selectedBGOBJ;
+
 
     private int currentYearInt;
     private int currentMonthInt;
@@ -87,8 +90,8 @@ public class PlayerDataSpawner : MonoBehaviour
             }
         }
 
-        Instantiate(playerData.selectedPet);
-        Instantiate(playerData.selectedBG);
+        Instantiate(selectedPetOBJ);
+        Instantiate(selectedBGOBJ);
 
         // SAVE
         SaveData();
@@ -122,27 +125,27 @@ public class PlayerDataSpawner : MonoBehaviour
         switch (playerData.selectedPetName)
         {
             case "Cat1":
-                playerData.selectedPet = petList[0];
+                selectedPetOBJ = petList[0];
                 break;
 
             case "Cat2":
-                playerData.selectedPet = petList[1];
+                selectedPetOBJ = petList[1];
                 break;
 
             case "Cat3":
-                playerData.selectedPet = petList[2];
+                selectedPetOBJ = petList[2];
                 break;
 
             case "Dog1":
-                playerData.selectedPet = petList[3];
+                selectedPetOBJ = petList[3];
                 break;
 
             case "Dog2":
-                playerData.selectedPet = petList[4];
+                selectedPetOBJ = petList[4];
                 break;
 
             case "Dog3":
-                playerData.selectedPet = petList[5];
+                selectedPetOBJ = petList[5];
                 break;
         }
     }
@@ -152,15 +155,15 @@ public class PlayerDataSpawner : MonoBehaviour
         switch (playerData.selectedBGName)
         {
             case "BG1":
-                playerData.selectedBG = bgList[0];
+                selectedBGOBJ = bgList[0];
                 break;
 
             case "BG2":
-                playerData.selectedBG = bgList[1];
+                selectedBGOBJ = bgList[1];
                 break;
 
             case "BG3":
-                playerData.selectedBG = bgList[2];
+                selectedBGOBJ = bgList[2];
                 break;
         }
     }
