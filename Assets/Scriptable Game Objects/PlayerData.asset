@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   emailID: 
-  selectedPetName: Cat2
-  selectedBGName: BG1
+  selectedPetName: Cat3
+  selectedBGName: BG2
   hp: 10
   food: 10
   money: 999869
