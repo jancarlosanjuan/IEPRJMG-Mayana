@@ -19,8 +19,9 @@ MonoBehaviour:
   selectedBGName: BG3
   hp: 3
   food: 0
-  money: 999969
+  money: 999869
   completedTasks: 0
   overduedTasks: 0
   filteredList: {fileID: 11400000, guid: 6adbe7e90326e964b9b5c34cedb6570b, type: 2}
-  costumeList: []
+  costumeList:
+  - Police
