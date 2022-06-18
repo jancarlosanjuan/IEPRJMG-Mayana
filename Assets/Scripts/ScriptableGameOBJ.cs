@@ -23,6 +23,7 @@ public class ScriptableGameOBJ : ScriptableObject
     public int overduedTasks;
 
     public TaskList filteredList;
+    
 
     public List<string> costumeList = new List<string>();
 
