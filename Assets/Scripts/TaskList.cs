@@ -4,6 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Task List",
                  menuName = "Scriptable OBJ/ Task List")]
+[System.Serializable]
 public class TaskList : ScriptableObject
 {
     [SerializeField]
