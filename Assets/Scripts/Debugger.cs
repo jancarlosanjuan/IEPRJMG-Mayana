@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Debugger : MonoBehaviour
 {
-    public ScriptableGameOBJ playerData;
+    [SerializeField]
+    private TextMeshProUGUI text;
+    [SerializeField]
+    private GameManager gameManager;
     private void Start()
     {
-        Debug.Log(playerData.selectedPet.name);
-        Debug.Log(playerData.selectedBG.name);
+        text.text = gameManager.userEmail;
     }
 }

@@ -47,11 +47,12 @@ public class OnLoad : MonoBehaviour
 
     public void LoadJSON()
     {
+        /*
         mobilePath = Application.persistentDataPath;
         string json = File.ReadAllText(mobilePath + "/" + gameManager.GoogleUser.Email + ".json");
         JsonUtility.FromJsonOverwrite(json, playerData);
 
-
+        
         // FILTER LIST
         for (int i = 0; i < playerData.filteredList.tasksList.Count; i++)
         {
@@ -95,11 +96,11 @@ public class OnLoad : MonoBehaviour
         }
 
 
-
         for (int i = 0; i < playerData.costumeList.Count; i++)
         {
             CostumeType parsed_enum = (CostumeType)System.Enum.Parse(typeof(CostumeType), playerData.costumeList[i]);
             costumeData.list.Add(parsed_enum);
         }
+        */
     }
 }

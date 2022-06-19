@@ -31,29 +31,25 @@ public class SaveLoadManager : MonoBehaviour
     public void OnCheckUserExist()
     {
         mobilePath = Application.persistentDataPath;
-        if (File.Exists(mobilePath + "/" + gameManager.GoogleUser.Email + ".json"))
+        if (File.Exists(mobilePath + "/" + "data.json"))
         {
-            onLoad.Invoke();
+            //onLoad.Invoke();
             SceneManager.LoadScene("GameScene");
         }
 
         else
         {
             // create & set player data
-            playerData.emailID = gameManager.GoogleUser.Email;
+            //playerData.emailID = gameManager.GoogleUser.Email;
 
-            playerData.selectedPet = selectedPet;
-            playerData.selectedBG = selectedBG;
-
-            playerData.hp = 10;
-            playerData.food = 10;
-            playerData.money = 1000;
-            playerData.completedTasks = 0;
-            playerData.overduedTasks = 0;
-            playerData.filteredList = list;
-            playerData.costumeList.Clear();
-
-            onSave.Invoke();
+            //playerData.hp = 10;
+            //playerData.food = 10;
+            //playerData.money = 1000;
+            //playerData.completedTasks = 0;
+            //playerData.overduedTasks = 0;
+            //playerData.filteredList = list;
+            //playerData.costumeList.Clear();
+            //onSave.Invoke();
             SceneManager.LoadScene("PetSelectionScene");
         }
     }

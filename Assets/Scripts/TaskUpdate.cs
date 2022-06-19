@@ -7,22 +7,22 @@ public class TaskUpdate : MonoBehaviour
     [SerializeField]
     private TaskUI taskPrefab;
     [SerializeField]
-    private ScriptableGameOBJ playerStats;
+    private TaskList filterTasks;
     [SerializeField]
     private GameObject content;
 
 
     private void Start()
     {
-        for(int i = 0; i < playerStats.filteredList.tasksList.Count; i++)
+        for(int i = 0; i < filterTasks.tasksList.Count; i++)
         {
             //if (playerStats.filteredList.tasksList[i].isListedAsOverDue ||
                 //playerStats.filteredList.tasksList[i].isListedAsComplete)
                 //return;
 
             TaskUI temp = GameObject.Instantiate(taskPrefab, content.transform);
-            temp.title.text = playerStats.filteredList.tasksList[i].title;
-            temp.description.text = playerStats.filteredList.tasksList[i].notes;
+            temp.title.text = filterTasks.tasksList[i].title;
+            temp.description.text = filterTasks.tasksList[i].notes;
         }
     }
 

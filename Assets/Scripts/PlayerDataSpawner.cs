@@ -15,6 +15,9 @@ public class PlayerDataSpawner : MonoBehaviour
     public TaskList list;
     public CostumeData costumeData;
 
+    private GameObject selectedPetOBJ;
+    private GameObject selectedBGOBJ;
+
 
     private int currentYearInt;
     private int currentMonthInt;
@@ -24,7 +27,7 @@ public class PlayerDataSpawner : MonoBehaviour
     private int currentTaskMonthInt;
     private int currentTaskDayInt;
 
-    private void Awake()
+    private void Start()
     {
         string currentDate = System.DateTime.UtcNow.ToLocalTime().ToString("yyyy MM dd");
 
@@ -38,13 +41,14 @@ public class PlayerDataSpawner : MonoBehaviour
 
         AssignSelectedPet();
         AssignSelectedBG();
-        AssignTaskList();
-        AssignCostumeData();
+        //AssignTaskList();
+        //AssignCostumeData();
 
         mobilePath = Application.persistentDataPath;
         string loadjson = File.ReadAllText(mobilePath + "/" + playerData.emailID + ".json");
         JsonUtility.FromJsonOverwrite(loadjson, playerData);
 
+        /*
         // FILTER LIST
         for (int i = 0; i < playerData.filteredList.tasksList.Count; i++)
         {
@@ -87,26 +91,26 @@ public class PlayerDataSpawner : MonoBehaviour
             }
         }
 
-        Instantiate(playerData.selectedPet);
-        Instantiate(playerData.selectedBG);
-
         // SAVE
         SaveData();
+        */
+        Instantiate(selectedPetOBJ);
+        Instantiate(selectedBGOBJ);
     }
 
     void OnApplicationQuit()
     {
-        SaveData();
+        //SaveData();
     }
 
     void OnApplicationFocus(bool hasFocus)
     {
-        SaveData();
+        //SaveData();
     }
 
     void OnApplicationPause(bool pauseStatus)
     {
-        SaveData();
+        //SaveData();
     }
 
     void SaveData()
@@ -122,27 +126,27 @@ public class PlayerDataSpawner : MonoBehaviour
         switch (playerData.selectedPetName)
         {
             case "Cat1":
-                playerData.selectedPet = petList[0];
+                selectedPetOBJ = petList[0];
                 break;
 
             case "Cat2":
-                playerData.selectedPet = petList[1];
+                selectedPetOBJ = petList[1];
                 break;
 
             case "Cat3":
-                playerData.selectedPet = petList[2];
+                selectedPetOBJ = petList[2];
                 break;
 
             case "Dog1":
-                playerData.selectedPet = petList[3];
+                selectedPetOBJ = petList[3];
                 break;
 
             case "Dog2":
-                playerData.selectedPet = petList[4];
+                selectedPetOBJ = petList[4];
                 break;
 
             case "Dog3":
-                playerData.selectedPet = petList[5];
+                selectedPetOBJ = petList[5];
                 break;
         }
     }
@@ -152,15 +156,15 @@ public class PlayerDataSpawner : MonoBehaviour
         switch (playerData.selectedBGName)
         {
             case "BG1":
-                playerData.selectedBG = bgList[0];
+                selectedBGOBJ = bgList[0];
                 break;
 
             case "BG2":
-                playerData.selectedBG = bgList[1];
+                selectedBGOBJ = bgList[1];
                 break;
 
             case "BG3":
-                playerData.selectedBG = bgList[2];
+                selectedBGOBJ = bgList[2];
                 break;
         }
     }

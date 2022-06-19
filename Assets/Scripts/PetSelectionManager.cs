@@ -14,10 +14,6 @@ public class PetSelectionManager : MonoBehaviour
     public GameObject choosenPet;
     public ScriptableGameOBJ playerData;
 
-    private void Start()
-    {
-        playerData.selectedPet = choosenPet;
-    }
 
     public void Update()
     {
@@ -43,17 +39,9 @@ public class PetSelectionManager : MonoBehaviour
     }
 
     public void ConfirmPet()
-    {
-        // make this into scriptable object
-        if (playerData.selectedPet.GetComponent<SpriteRenderer>())
-            playerData.selectedPet.GetComponent<SpriteRenderer>().sprite = spriteList[selectedSprite];
-
-        if (playerData.selectedPet != null)
-        {
-            playerData.selectedPet = null;
-            playerData.selectedPet = petList[selectedSprite];
-            playerData.selectedPetName = petList[selectedSprite].name;
-        }
+    {    
+        playerData.selectedPetName = petList[selectedSprite].name;
+        // delete?
 
         SceneManager.LoadScene("BackGroundSelection");
     }
