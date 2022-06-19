@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Firebase;
 using Firebase.Auth;
@@ -234,6 +235,8 @@ public class GoogleSignInDemo : MonoBehaviour
                         //onUserSuccessfulSignIn.Invoke();
                         //updateJSONfile(accountsListSerialized, filePath, fileName);
 
+                        StartCoroutine(timer());
+
                     }
                     else
                     {
@@ -250,6 +253,12 @@ public class GoogleSignInDemo : MonoBehaviour
         {
             txtpro.text = $"{req1.error}\n{req1.downloadHandler.text}";
         }
+    }
+
+    IEnumerator timer()
+    {
+        yield return new WaitForSeconds(1);
+        //do stuff
     }
 
     public void deleteUnusedJSON(string email,List<string> calledtasklistids, List<string> calledtaskids)
@@ -362,6 +371,7 @@ public class GoogleSignInDemo : MonoBehaviour
 
     }
 
+    
     public string[] splitString(string needle, string haystack)
     {
         //This will look for NEEDLE in HAYSTACK and return an array of split strings.
@@ -665,6 +675,22 @@ public class GoogleSignInDemo : MonoBehaviour
 
     private void updateJSONfile(AccountsListSerialized list, string filepath, string filename)
     {
+
+        /*
+        AccountsListSerialized accountsListSerialized =
+            JsonUtility.FromJson<AccountsListSerialized>(gameManager.filePath + gameManager.fileName);
+
+        int emailIndex = FindEmailIndexInJSON(accountsListSerialized, gameManager.GoogleUser.Email);
+
+        AccountSerialized account = accountsListSerialized.accountsSerialized[emailIndex];
+        account.selectedBGName = "garret";
+        account.selectedPetName = "aljon";
+
+        string temp = JsonUtility.ToJson(accountsListSerialized, true);
+        File.WriteAllText(gameManager.filePath + gameManager.fileName, temp);
+        */
+
+
         string emptyJson2 = JsonUtility.ToJson(list, true);
         //googleUserEmailTXT.text = "UpdatedJSONfile \n at:\n " +filepath+filename;
         Debug.Log("Created JSON data");
