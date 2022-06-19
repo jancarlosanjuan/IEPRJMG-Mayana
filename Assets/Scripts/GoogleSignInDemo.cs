@@ -194,6 +194,23 @@ public class GoogleSignInDemo : MonoBehaviour
                     playerData.overduedTasks = 0;
                 }
 
+                bool test = File.Exists(gameManager.filePath + gameManager.fileName);
+
+                if (!test)
+                {
+                    accountsListSerialized_MAIN.accountsSerialized.Add(
+                        CreateNewAccountSerialized(gameManager.GoogleUser.Email, ""));
+
+                    string emptyJson = JsonUtility.ToJson(accountsListSerialized_MAIN, true);
+
+                    Debug.Log("Created JSON data");
+                    File.WriteAllText(gameManager.filePath + gameManager.fileName, emptyJson);
+                }
+
+                string json2 = File.ReadAllText(gameManager.filePath + gameManager.fileName);
+                accountsListSerialized_MAIN = JsonUtility.FromJson<AccountsListSerialized>(json2);
+
+
                 foreach (var taskListJson in j2["items"].AsArray.Children)
                 {
                     string taskListId = taskListJson["id"];
@@ -207,23 +224,6 @@ public class GoogleSignInDemo : MonoBehaviour
 
                     if (req3.result == UnityWebRequest.Result.Success)
                     {
-
-                        bool test = File.Exists(gameManager.filePath + gameManager.fileName);
-
-                        if (!test)
-                        {
-                            accountsListSerialized_MAIN.accountsSerialized.Add(
-                                CreateNewAccountSerialized(gameManager.GoogleUser.Email, ""));
-
-                            string emptyJson = JsonUtility.ToJson(accountsListSerialized_MAIN, true);
-                           
-                            Debug.Log("Created JSON data");
-                            File.WriteAllText(gameManager.filePath + gameManager.fileName, emptyJson);
-                        }
-
-                        string json2 = File.ReadAllText(gameManager.filePath + gameManager.fileName);
-                        accountsListSerialized_MAIN = JsonUtility.FromJson<AccountsListSerialized>(json2);
-
                     
                         var j3 = SimpleJSON.JSON.Parse(req3.downloadHandler.text);
 
