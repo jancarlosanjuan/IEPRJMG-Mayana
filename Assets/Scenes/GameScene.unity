@@ -8999,6 +8999,7 @@ MonoBehaviour:
   gameManager: {fileID: 11400000, guid: 7e37326f18fbf6947a7b60480d406844, type: 2}
   playerData: {fileID: 11400000, guid: 97b8c80f80bc9474db064b33cd7ee1fb, type: 2}
   text: {fileID: 1307375161}
+  data: {fileID: 11400000, guid: e07fe8352c771464c8ee3fd105e9514d, type: 2}
 --- !u!4 &1297819349
 Transform:
   m_ObjectHideFlags: 0

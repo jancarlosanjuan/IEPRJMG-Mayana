@@ -9,6 +9,7 @@ using Google;
 using JetBrains.Annotations;
 using SimpleJSON;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
@@ -198,10 +199,33 @@ public class GoogleSignInDemo : MonoBehaviour
 
                     if (req3.result == UnityWebRequest.Result.Success)
                     {
+
+                        bool test = File.Exists(gameManager.filePath + gameManager.fileName);
+
+                        if (!test)
+                        {
+                            accountsListSerialized_MAIN.accountsSerialized.Add(
+                                CreateNewAccountSerialized(gameManager.GoogleUser.Email, ""));
+
+                            string emptyJson = JsonUtility.ToJson(accountsListSerialized_MAIN, true);
+                           
+                            Debug.Log("Created JSON data");
+                            File.WriteAllText(gameManager.filePath + gameManager.fileName, emptyJson);
+                        }
+
+                        string json2 = File.ReadAllText(gameManager.filePath + gameManager.fileName);
+                        accountsListSerialized_MAIN = JsonUtility.FromJson<AccountsListSerialized>(json2);
+
+                    
                         var j3 = SimpleJSON.JSON.Parse(req3.downloadHandler.text);
 
-                        txtpro.text = "";
-                        
+                        //txtpro.text = "";
+
+                        if (playerData != null)
+                        {
+                            playerData.completedTasks = 0;
+                            playerData.overduedTasks = 0;
+                        }
                         foreach (var taskJson in j3["items"].AsArray.Children)
                         {
                             Task task = new Task();
@@ -214,26 +238,36 @@ public class GoogleSignInDemo : MonoBehaviour
                             task.title = taskJson["title"];
                             task.notes = taskJson["notes"];
                             task.status = taskJson["status"];
-                            task.dueDate = taskJson["due"];
+                            task.dueDate = "";//force init
+                            if (!(taskJson["due"] == null || taskJson["due"] == ""))
+                            {
+                                task.dueDate = taskJson["due"];
+                            }
+                            
                             
 
                             currentLoggedInTask = task;
 
 
                             //check to validate some stuff
-                            validateSaveDataFile(gameManager.GoogleUser.Email, currentLoggedInTask.taskListId,currentLoggedInTask.taskId);
+                            validateSaveDataFile(accountsListSerialized_MAIN, gameManager.GoogleUser.Email, currentLoggedInTask.taskListId,currentLoggedInTask.taskId);
 
                             //txtpro.text += $"\nTitle: {task.title}\nTask ID: {task.taskId}\nNotes: {task.notes}\nStatus: {task.status}\nDue Date: {task.dueDate}";
                         }
 
+                     
+                        updateJSONfile(accountsListSerialized_MAIN, gameManager.filePath, gameManager.fileName);
+
                         //force update unused data in json
                         deleteUnusedJSON(gameManager.GoogleUser.Email, calledTaskListIDs, calledTaskIDs);
-                        
+
                         //load stuff
                         LoadPlayerDataFromJSON(gameManager.GoogleUser.Email);
-
-                        googleUserEmailTXT.text = gameManager.GoogleUser.Email;
+                        //googleUserEmailTXT.text = "loading...";
+                        
                         StartCoroutine(timer());
+
+                        
                     }
                     else
                     {
@@ -254,7 +288,8 @@ public class GoogleSignInDemo : MonoBehaviour
 
     IEnumerator timer()
     {
-        yield return new WaitForSeconds(2);
+        //googleUserEmailTXT.text = "changing world...";
+        yield return new WaitForSeconds(5);
 
         if (playerData.selectedPetName == "someName")
         {
@@ -340,9 +375,8 @@ public class GoogleSignInDemo : MonoBehaviour
                         {
                             t[k] = null;
                             t.Remove(t[k]);
-                            //t.RemoveAt(k);
                             isFound = true;
-                            googleUserEmailTXT.text = "removed a task";
+                            //googleUserEmailTXT.text = "removed a task";
                             break;
                         }
                     }
@@ -362,8 +396,7 @@ public class GoogleSignInDemo : MonoBehaviour
                     {
                         tls[j] = null;
                         tls.Remove(tls[j]);
-                        googleUserEmailTXT.text = "removed a tasklist";
-                        //tls.RemoveAt(j);
+                        //googleUserEmailTXT.text = "removed a tasklist";
                         break;
                     }
                 }
@@ -387,44 +420,21 @@ public class GoogleSignInDemo : MonoBehaviour
 
     }
 
-    public void validateSaveDataFile(string email,string tasklistid, string taskid)//TaskList tempList
+    public void validateSaveDataFile(AccountsListSerialized accountsListSerialized_2, string email,string tasklistid, string taskid)//TaskList tempList
     {
-        AccountsListSerialized accountsListSerialized;
-
-        //check if file exists
-        bool test = File.Exists(gameManager.filePath + gameManager.fileName);
-        //Debug.Log("Bool: " + test + "  Name:  " + filePath+fileName);
-        //TaskList tl = JsonUtility.FromJson<TaskList>()
-
-
-        //if does not exist
-        //create
-        if (!test)
-        {
-            accountsListSerialized_MAIN.accountsSerialized.Add(CreateNewAccountSerialized(email, tasklistid));
-            string emptyJson = JsonUtility.ToJson(accountsListSerialized_MAIN, true);
-            Debug.Log("Created JSON data");
-            File.WriteAllText(gameManager.filePath + gameManager.fileName, emptyJson);
-        }
+       
 
         //
         {
             //open
-            string json = File.ReadAllText(gameManager.filePath + gameManager.fileName);
-            accountsListSerialized = JsonUtility.FromJson<AccountsListSerialized>(json);
-            //Debug.Log("JSON: " + jsonFileRead.Email + " " +jsonFileRead.tasksListSerialized[0].tasks[0]);
 
-            //check if email exists inside json
-            //AccountSerialized toFind = new AccountSerialized();
-            //toFind.Email = "testEmail";//gameManager.GoogleUser.Email;
-
-            int emailIndex = FindEmailIndexInJSON(accountsListSerialized, email);
+            int emailIndex = FindEmailIndexInJSON(accountsListSerialized_2, email);
             if (emailIndex != -1) 
             //if exists
             {
                 Debug.Log("Email Exists");
                 //check task id
-                int taskListIDindex = FindTaskListIndexFromIDInJSON(accountsListSerialized, emailIndex, tasklistid);
+                int taskListIDindex = FindTaskListIndexFromIDInJSON(accountsListSerialized_2, emailIndex, tasklistid);
 
 
                 //if exists
@@ -432,42 +442,42 @@ public class GoogleSignInDemo : MonoBehaviour
                 {
                     Debug.Log("TaskList ID exists");
 
-                    List<Task> tasks = accountsListSerialized.accountsSerialized[emailIndex].tasksListSerialized[taskListIDindex].tasks;
+                    List<Task> tasks = accountsListSerialized_2.accountsSerialized[emailIndex].tasksListSerialized[taskListIDindex].tasks;
                     
-                    int taskindex = FindTaskIndexFromIDInJSON(accountsListSerialized, emailIndex, taskListIDindex, taskid); // use current task id
+                    int taskindex = FindTaskIndexFromIDInJSON(accountsListSerialized_2, emailIndex, taskListIDindex, taskid); // use current task id
                     //task exists
                     if (taskindex != -1)
                     {
                         googleUserEmailTXT.text = "UPDATING TASKS....";
-                        bool didUpdate = false;
-                        bool didStatusChange = false;
+                      
                         //update tasks
                       
                         tasks[taskindex].title = currentLoggedInTask.title;//currentLoggedInTask.title
                         tasks[taskindex].notes = currentLoggedInTask.notes;
-                        tasks[taskindex].status = currentLoggedInTask.status;
+                        
                         tasks[taskindex].dueDate = currentLoggedInTask.dueDate;
-                    
-                        //check if overdue
-                        if (currentLoggedInTask.status != "completed")
-                        {
-                            if (!checkIfDueDateIsLate(tasks[taskindex].dueDate))
-                            {
-                                //damage
-                                playerData.overduedTasks++;
 
+
+                        //googleUserEmailTXT.text = currentLoggedInTask.status;
+                        if (tasks[taskindex].status != "needsAction")
+                        {
+                            googleUserEmailTXT.text = tasks[taskindex].status;
+                        }
+                        
+
+                        if (tasks[taskindex].status != currentLoggedInTask.status)
+                        {
+                            tasks[taskindex].status = currentLoggedInTask.status;
+                            if (currentLoggedInTask.status != "needsAction")
+                            {
+                                
+                                //reward
+                                playerData.completedTasks++;
+                                googleUserEmailTXT.text = "Added Reward..." + playerData.completedTasks.ToString();
                             }
                         }
-                        else
-                        {
-                            //reward
-                            playerData.completedTasks++;
-                        }
-
-
-                        //updateJSONfile(accountsListSerialized, filePath, fileName);
-
-                    
+                        
+                        
                         
                     }
                     //task does not exist
@@ -475,7 +485,6 @@ public class GoogleSignInDemo : MonoBehaviour
                     {
                         //create a task
                         tasks.Add(CreateNewTaskSerialized(currentLoggedInTask));
-                        //updateJSONfile(accountsListSerialized, filePath, fileName);
                     }
 
 
@@ -484,9 +493,8 @@ public class GoogleSignInDemo : MonoBehaviour
                 {
                     //append tasklist
                     Debug.Log("TaskList ID DOES NOT exists");
-                    accountsListSerialized.accountsSerialized[emailIndex].tasksListSerialized.Add(
+                    accountsListSerialized_2.accountsSerialized[emailIndex].tasksListSerialized.Add(
                         CreateTaskListSerialized(currentLoggedInTask));
-                    //updateJSONfile(accountsListSerialized, filePath, fileName);
 
                 }
 
@@ -495,17 +503,17 @@ public class GoogleSignInDemo : MonoBehaviour
             else{
                 Debug.Log("Email DOES NOT Exists");
                 //append
-                accountsListSerialized.accountsSerialized.Add(CreateNewAccountSerialized(email, tasklistid));
-                //updateJSONfile(accountsListSerialized, filePath, fileName);
+                accountsListSerialized_2.accountsSerialized.Add(CreateNewAccountSerialized(email, tasklistid));
+                googleUserEmailTXT.text = "email does not exist error";
+
             }
         }
-
-        updateJSONfile(accountsListSerialized, gameManager.filePath, gameManager.fileName);
+        
     }
 
     public bool checkIfDueDateIsLate(string date)
     {
-        if (date == null) return false;
+        if (date == null || date == "") return false;
 
         int year;
         int month;
@@ -528,6 +536,8 @@ public class GoogleSignInDemo : MonoBehaviour
 
         string currentDate = System.DateTime.UtcNow.ToLocalTime().ToString("yyyy MM dd hh mm ss");
 
+        
+            
         string currentYearStr = currentDate.Substring(0, 4);
         string currentMonthStr = currentDate.Substring(5, 2);
         string currentDayStr = currentDate.Substring(8, 2);
@@ -542,7 +552,17 @@ public class GoogleSignInDemo : MonoBehaviour
         int currentMinuteInt = Int32.Parse(currentMin);
         int currentSecondInt = Int32.Parse(currentSec);
 
-     
+
+        /*
+        googleUserEmailTXT.text = "Current Date:   " + currentDate + "\n"
+                                              + " Date:  " + year + " " + month + " " + day + " Time:  " + hour + " " +
+                                              minute + " " + second + " " +
+                                              "CURRENT Date:  " + currentYearInt + " " + currentMonthInt + " " +
+                                              currentDayInt +
+                                              "CURRENT Time:  " + currentHourInt + " " + currentMinuteInt + " " +
+                                              currentSecondInt + " ";
+
+        */
 
         Debug.Log(" Date:  "+ year + " " + month + " " + day + " Time:  " + hour + " " + minute + " " + second + " " );
         Debug.Log("CURRENT Date:  " + currentYearInt + " " + currentMonthInt + " " + currentDayInt + 
@@ -550,58 +570,54 @@ public class GoogleSignInDemo : MonoBehaviour
 
 
         // compare to current date
-        if (year <= currentYearInt)
-        {
-            if (month <= currentMonthInt)
+        if (year > currentYearInt)
+        { 
+            if (month > currentMonthInt)
             {
-                if (day <= currentDayInt)
+                if (day > currentDayInt)
                 {
-                    if (hour <= currentHourInt)
+                    if (hour > currentHourInt)
                     {
-                        if (minute <= currentMinuteInt)
+                        if (minute > currentMinuteInt)
                         {
-                            if (second < currentSecondInt)
+                            if (second >= currentSecondInt)
                             {
-                                return true;
+                                return false;
                             }
-
-                            return false;
                         }
-                        return false;
                     }
-                    return false;
                 }
-                return false;
             }
-
-            return false;
         }
 
 
-        return false;
+        return true;
     }
 
 
     public AccountSerialized CreateNewAccountSerialized(string email, string ID)
     {
+        googleUserEmailTXT.text = "creating account...";
         AccountSerialized account = new AccountSerialized();
         account.Email = email;//gameManager.GoogleUser.Email;
         TaskListSerialized tls = CreateTaskListSerialized(currentLoggedInTask); //use currenttask instead of this 
 
+        
         account.selectedPetName = "someName";
         account.selectedBGName = "someBGName";
         account.hp = 10;
         account.food = 10;
         account.money = 150;
 
+        /*
         playerData.selectedBGName = "someBGName";
         playerData.selectedPetName = "someName";
         playerData.hp = account.hp;
         playerData.food = account.food;
         playerData.money = account.money;
+        */
 
-
-        //tls.tasks.Add(currentLoggedInTask);
+        tls.tasks.Add(currentLoggedInTask);
         account.tasksListSerialized.Add(tls);
 
         return account;
@@ -611,8 +627,8 @@ public class GoogleSignInDemo : MonoBehaviour
     {
         
 
-          string json = File.ReadAllText(gameManager.filePath + gameManager.fileName);
-          AccountsListSerialized accountsListSerialized = JsonUtility.FromJson<AccountsListSerialized>(json);
+        string json = File.ReadAllText(gameManager.filePath + gameManager.fileName);
+        AccountsListSerialized accountsListSerialized = JsonUtility.FromJson<AccountsListSerialized>(json);
 
 
         int emailIndex = FindEmailIndexInJSON(accountsListSerialized, email);
@@ -621,13 +637,19 @@ public class GoogleSignInDemo : MonoBehaviour
             AccountSerialized account = accountsListSerialized.accountsSerialized[emailIndex];
             
             playerData.selectedPetName = account.selectedPetName;
+           
             playerData.selectedBGName = account.selectedBGName;
             playerData.hp = account.hp;
             playerData.food = account.food;
             playerData.money = account.money;
 
-            //playerData.costumeList = account.costumeList; //ALJON
-            //playerData.costumeList.Clear();
+            /*
+            googleUserEmailTXT.text = playerData.selectedBGName + "\n" +
+                                      playerData.hp + "\n" +
+                                      playerData.food + "\n" +
+                                      playerData.money + "\n";*/
+
+           playerData.costumeList.Clear();
 
             for (int i = 0; i < account.costumeList.Count; i++)
             {
@@ -635,6 +657,7 @@ public class GoogleSignInDemo : MonoBehaviour
                 costumeData.list.Add(type);
             }
 
+            //googleUserEmailTXT.text = "UPDATING PlayerData....";
             LoadPlayerTasksFromJSON(account, email);
 
         }
@@ -653,7 +676,18 @@ public class GoogleSignInDemo : MonoBehaviour
             List<Task> t = tls[i].tasks;
             for (int j = 0; j < t.Count; j++)
             {
-                playerData.filteredList.tasksList.Add(t[j]);
+                
+                if (t[j].status != "completed")
+                {
+                    if (checkIfDueDateIsLate(t[j].dueDate))
+                    {
+                        //damage
+                        playerData.overduedTasks++;
+
+                    }
+                    playerData.filteredList.tasksList.Add(t[j]);
+                }
+                
             }
         }
     }

@@ -42,11 +42,11 @@ public class PlayerDataSpawner : MonoBehaviour
         AssignSelectedPet();
         AssignSelectedBG();
         //AssignTaskList();
-        //AssignCostumeData();
+        AssignCostumeData();
 
-        mobilePath = Application.persistentDataPath;
+        /*mobilePath = Application.persistentDataPath;
         string loadjson = File.ReadAllText(mobilePath + "/" + playerData.emailID + ".json");
-        JsonUtility.FromJsonOverwrite(loadjson, playerData);
+        JsonUtility.FromJsonOverwrite(loadjson, playerData);*/
 
         /*
         // FILTER LIST
