@@ -139,6 +139,7 @@ public class GoogleSignInDemo : MonoBehaviour
             // AddToInformation("Email = " + task.Result.Email);
             GoogleSignInUser googleUser = task.Result;
             gameManager.GoogleUser = googleUser;
+            gameManager.userEmail = googleUser.Email;
 
             //txtpro.text = $"Successfully logged in!\nEmail:{googleUser.Email}\nAuth code: {googleUser.AuthCode}";
 

@@ -11,4 +11,5 @@ public class GameManager : ScriptableObject
     public string RefreshToken;
     public string filePath;
     public string fileName;
+    public string userEmail;
 }

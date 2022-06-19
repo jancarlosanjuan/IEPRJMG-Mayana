@@ -47,11 +47,12 @@ public class OnLoad : MonoBehaviour
 
     public void LoadJSON()
     {
+        /*
         mobilePath = Application.persistentDataPath;
         string json = File.ReadAllText(mobilePath + "/" + gameManager.GoogleUser.Email + ".json");
         JsonUtility.FromJsonOverwrite(json, playerData);
 
-        /*
+        
         // FILTER LIST
         for (int i = 0; i < playerData.filteredList.tasksList.Count; i++)
         {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-
+using TMPro;
 
 public class SaveToJSON : MonoBehaviour
 {
@@ -11,24 +11,24 @@ public class SaveToJSON : MonoBehaviour
     [SerializeField]
     private ScriptableGameOBJ playerData;
 
+    [SerializeField]
+    private TextMeshProUGUI text;
+
 
     void OnApplicationFocus(bool hasFocus)
     {
-        if(gameManager.GoogleUser != null)
-            updateJSONonAction(gameManager.GoogleUser.Email);
+        updateJSONonAction(gameManager.GoogleUser.Email);
     }
 
 
     void OnApplicationQuit()
     {
-        if (gameManager.GoogleUser != null)
-            updateJSONonAction(gameManager.GoogleUser.Email);
+        updateJSONonAction(gameManager.GoogleUser.Email);
     }
 
     void OnApplicationPause(bool pauseStatus)
     {
-        if (gameManager.GoogleUser != null)
-            updateJSONonAction(gameManager.GoogleUser.Email);
+        updateJSONonAction(gameManager.GoogleUser.Email);
     }
 
 
@@ -36,7 +36,6 @@ public class SaveToJSON : MonoBehaviour
     {
         string json = File.ReadAllText(gameManager.filePath + gameManager.fileName);
         AccountsListSerialized accountsListSerialized = JsonUtility.FromJson<AccountsListSerialized>(json);
-
 
         int emailIndex = FindEmailIndexInJSON(accountsListSerialized, email);
         if (emailIndex != -1)
@@ -52,8 +51,6 @@ public class SaveToJSON : MonoBehaviour
 
             updateJSONfile(accountsListSerialized, gameManager.filePath, gameManager.fileName);
         }
-
-
     }
 
     private int FindEmailIndexInJSON(AccountsListSerialized list, string email)
@@ -73,7 +70,6 @@ public class SaveToJSON : MonoBehaviour
     private void updateJSONfile(AccountsListSerialized list, string filepath, string filename)
     {
         string emptyJson2 = JsonUtility.ToJson(list, true);
-        //googleUserEmailTXT.text = "UpdatedJSONfile \n at:\n " +filepath+filename;
         Debug.Log("Created JSON data");
         File.WriteAllText(filepath + filename, emptyJson2);
     }
