@@ -149,6 +149,8 @@ public class GoogleSignInDemo : MonoBehaviour
             // save email here (will serve as unique id of user)
             //googleUserEmailTXT.text = googleUser.Email;
 
+            
+
         }
     }
 
@@ -185,6 +187,12 @@ public class GoogleSignInDemo : MonoBehaviour
             if (req2.result == UnityWebRequest.Result.Success)
             {
                 var j2 = SimpleJSON.JSON.Parse(req2.downloadHandler.text);
+
+                if (playerData != null)
+                {
+                    playerData.completedTasks = 0;
+                    playerData.overduedTasks = 0;
+                }
 
                 foreach (var taskListJson in j2["items"].AsArray.Children)
                 {
@@ -223,9 +231,9 @@ public class GoogleSignInDemo : MonoBehaviour
 
                         if (playerData != null)
                         {
-                            playerData.completedTasks = 0;
                             playerData.overduedTasks = 0;
                         }
+
                         foreach (var taskJson in j3["items"].AsArray.Children)
                         {
                             Task task = new Task();
@@ -255,7 +263,8 @@ public class GoogleSignInDemo : MonoBehaviour
                             //txtpro.text += $"\nTitle: {task.title}\nTask ID: {task.taskId}\nNotes: {task.notes}\nStatus: {task.status}\nDue Date: {task.dueDate}";
                         }
 
-                     
+                        googleUserEmailTXT.text = playerData.completedTasks.ToString();
+
                         updateJSONfile(accountsListSerialized_MAIN, gameManager.filePath, gameManager.fileName);
 
                         //force update unused data in json
@@ -265,6 +274,7 @@ public class GoogleSignInDemo : MonoBehaviour
                         LoadPlayerDataFromJSON(gameManager.GoogleUser.Email);
                         //googleUserEmailTXT.text = "loading...";
                         
+                        // load scene
                         StartCoroutine(timer());
 
                         
@@ -289,7 +299,7 @@ public class GoogleSignInDemo : MonoBehaviour
     IEnumerator timer()
     {
         //googleUserEmailTXT.text = "changing world...";
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
 
         if (playerData.selectedPetName == "someName")
         {
@@ -473,7 +483,6 @@ public class GoogleSignInDemo : MonoBehaviour
                                 
                                 //reward
                                 playerData.completedTasks++;
-                                googleUserEmailTXT.text = "Added Reward..." + playerData.completedTasks.ToString();
                             }
                         }
                         
@@ -688,6 +697,7 @@ public class GoogleSignInDemo : MonoBehaviour
                     playerData.filteredList.tasksList.Add(t[j]);
                 }
                 
+
             }
         }
     }

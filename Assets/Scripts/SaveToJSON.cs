@@ -16,13 +16,18 @@ public class SaveToJSON : MonoBehaviour
 
     [SerializeField] private CostumeData data;
 
+    private void Awake()
+    {
+        text.text = playerData.completedTasks.ToString();
+    }
+
 
     void OnApplicationFocus(bool hasFocus)
     {
-        if(gameManager.GoogleUser == null)
-            text.text = "GoogleUser is null";
-        else
-            text.text = "GoogleUser is not null!";
+        //if (gameManager.GoogleUser == null)
+            //text.text = "GoogleUser is null";
+        //else
+            //text.text = "GoogleUser is not null!";
 
         updateJSONonAction(gameManager.GoogleUser.Email);
     }
@@ -83,6 +88,6 @@ public class SaveToJSON : MonoBehaviour
         Debug.Log("Created JSON data");
         File.WriteAllText(filepath + filename, emptyJson2);
 
-        text.text = "Done Saving!";
+        //text.text = "Done Saving!";
     }
 }

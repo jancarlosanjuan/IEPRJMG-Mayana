@@ -185,7 +185,9 @@ public class PlayerDataSpawner : MonoBehaviour
 
     public void ResetPlayerDataTasks()
     {
+        /*
         playerData.overduedTasks = 0;
         playerData.completedTasks = 0;
+        */
     }
 }
