@@ -41,13 +41,14 @@ public class PlayerDataSpawner : MonoBehaviour
 
         AssignSelectedPet();
         AssignSelectedBG();
-        AssignTaskList();
-        AssignCostumeData();
+        //AssignTaskList();
+        //AssignCostumeData();
 
         mobilePath = Application.persistentDataPath;
         string loadjson = File.ReadAllText(mobilePath + "/" + playerData.emailID + ".json");
         JsonUtility.FromJsonOverwrite(loadjson, playerData);
 
+        /*
         // FILTER LIST
         for (int i = 0; i < playerData.filteredList.tasksList.Count; i++)
         {
@@ -92,24 +93,24 @@ public class PlayerDataSpawner : MonoBehaviour
 
         // SAVE
         SaveData();
-
+        */
         Instantiate(selectedPetOBJ);
         Instantiate(selectedBGOBJ);
     }
 
     void OnApplicationQuit()
     {
-        SaveData();
+        //SaveData();
     }
 
     void OnApplicationFocus(bool hasFocus)
     {
-        SaveData();
+        //SaveData();
     }
 
     void OnApplicationPause(bool pauseStatus)
     {
-        SaveData();
+        //SaveData();
     }
 
     void SaveData()

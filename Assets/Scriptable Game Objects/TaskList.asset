@@ -12,20 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 877b17e3003bed7449013f248ae4621a, type: 3}
   m_Name: TaskList
   m_EditorClassIdentifier: 
-  tasksList:
-  - taskListId: 1
-    taskId: 123123123
-    title: yikes
-    notes: woah
-    status: completed
-    dueDate: 2022-06-09T00:00:000Z
-    isListedAsComplete: 1
-    isListedAsOverDue: 1
-  - taskListId: 0
-    taskId: 123123123
-    title: yikes
-    notes: asd
-    status: completed
-    dueDate: 2022-06-09T00:00:000Z
-    isListedAsComplete: 0
-    isListedAsOverDue: 0
+  tasksList: []

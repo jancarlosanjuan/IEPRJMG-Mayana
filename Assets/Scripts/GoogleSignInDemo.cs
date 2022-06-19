@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using SimpleJSON;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 
 public class GoogleSignInDemo : MonoBehaviour
@@ -58,7 +59,7 @@ public class GoogleSignInDemo : MonoBehaviour
         gameManager.filePath = Application.persistentDataPath + "/";
         gameManager.fileName = "data.json";
 
-        googleUserEmailTXT.text = gameManager.filePath + "\n" + gameManager.fileName;
+        //googleUserEmailTXT.text = gameManager.filePath + "\n" + gameManager.fileName;
 
         CheckFirebaseDependencies();
     }
@@ -90,7 +91,7 @@ public class GoogleSignInDemo : MonoBehaviour
 
     private void OnSignIn()
     {
-        txtpro.text = "Signing in...";
+        googleUserEmailTXT.text = "Signing in...";
         
         GoogleSignIn.Configuration = configuration;
         GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnAuthenticationFinished);
@@ -139,7 +140,6 @@ public class GoogleSignInDemo : MonoBehaviour
             GoogleSignInUser googleUser = task.Result;
             gameManager.GoogleUser = googleUser;
 
-
             //txtpro.text = $"Successfully logged in!\nEmail:{googleUser.Email}\nAuth code: {googleUser.AuthCode}";
 
             StartCoroutine(Test());
@@ -167,7 +167,7 @@ public class GoogleSignInDemo : MonoBehaviour
 
         if (req1.result == UnityWebRequest.Result.Success)
         {
-            txtpro.text = req1.downloadHandler.text;
+            //txtpro.text = req1.downloadHandler.text;
             var json = SimpleJSON.JSON.Parse(req1.downloadHandler.text);
             gameManager.AccessToken = json["access_token"];
             gameManager.RefreshToken = json["refresh_token"];
@@ -230,25 +230,39 @@ public class GoogleSignInDemo : MonoBehaviour
                         
                         //load stuff
                         LoadPlayerDataFromJSON(gameManager.GoogleUser.Email);
-                        
-                        //onUserSuccessfulSignIn.Invoke();
-                        //updateJSONfile(accountsListSerialized, filePath, fileName);
 
+                        googleUserEmailTXT.text = gameManager.GoogleUser.Email;
+                        StartCoroutine(timer());
                     }
                     else
                     {
-                        txtpro.text = $"{req3.error}\n{req3.downloadHandler.text}";
+                        //txtpro.text = $"{req3.error}\n{req3.downloadHandler.text}";
                     }
                 }
             }
             else
             {
-                txtpro.text = $"{req2.error}\n{req2.downloadHandler.text}";
+                //txtpro.text = $"{req2.error}\n{req2.downloadHandler.text}";
             }
         }
         else
         {
-            txtpro.text = $"{req1.error}\n{req1.downloadHandler.text}";
+            //txtpro.text = $"{req1.error}\n{req1.downloadHandler.text}";
+        }
+    }
+
+    IEnumerator timer()
+    {
+        yield return new WaitForSeconds(2);
+
+        if (playerData.selectedPetName == "someName")
+        {
+            SceneManager.LoadScene("PetSelectionScene");
+        }
+
+        else
+        {
+            SceneManager.LoadScene("GameScene");
         }
     }
 
@@ -612,6 +626,8 @@ public class GoogleSignInDemo : MonoBehaviour
             playerData.money = account.money;
 
             //playerData.costumeList = account.costumeList; //ALJON
+            //playerData.costumeList.Clear();
+
             for (int i = 0; i < account.costumeList.Count; i++)
             {
                 CostumeType type = (CostumeType)System.Enum.Parse(typeof(CostumeType), account.costumeList[i]);
@@ -626,7 +642,11 @@ public class GoogleSignInDemo : MonoBehaviour
 
     public void LoadPlayerTasksFromJSON(AccountSerialized acc,string email) //aljon
     {
-        List<TaskListSerialized> tls = acc.tasksListSerialized;
+        List <TaskListSerialized> tls = acc.tasksListSerialized;
+        playerData.filteredList.tasksList.Clear();
+
+        
+
         for (int i = 0; i <  tls.Count ; i++)
         {
             List<Task> t = tls[i].tasks;

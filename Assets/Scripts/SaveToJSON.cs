@@ -50,7 +50,6 @@ public class SaveToJSON : MonoBehaviour
             account.money = playerData.money;
             account.costumeList = playerData.costumeList;
 
-
             updateJSONfile(accountsListSerialized, gameManager.filePath, gameManager.fileName);
         }
 

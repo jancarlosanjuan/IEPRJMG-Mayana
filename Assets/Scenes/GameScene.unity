@@ -8995,7 +8995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 056725ac2f12a5a498bc567715707f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 11400000, guid: 1d3800fba03a7de4baa5d37a329a0ee5, type: 2}
+  gameManager: {fileID: 11400000, guid: 7e37326f18fbf6947a7b60480d406844, type: 2}
   playerData: {fileID: 11400000, guid: 97b8c80f80bc9474db064b33cd7ee1fb, type: 2}
 --- !u!4 &1297819349
 Transform:
@@ -9010,7 +9010,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1301867269
 GameObject:
@@ -10091,7 +10091,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskPrefab: {fileID: 7201482364017325813, guid: b66adc7918b378848adda544fc80044b, type: 3}
-  playerStats: {fileID: 11400000, guid: 97b8c80f80bc9474db064b33cd7ee1fb, type: 2}
+  filterTasks: {fileID: 11400000, guid: 6adbe7e90326e964b9b5c34cedb6570b, type: 2}
   content: {fileID: 311999105}
 --- !u!1 &1510360404
 GameObject:
