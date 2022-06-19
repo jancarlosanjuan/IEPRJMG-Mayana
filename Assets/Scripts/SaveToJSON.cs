@@ -17,6 +17,10 @@ public class SaveToJSON : MonoBehaviour
 
     void OnApplicationFocus(bool hasFocus)
     {
+        if (gameManager.GoogleUser == null)
+        {
+            text.text = "WADAFAK";
+        }
         updateJSONonAction(gameManager.GoogleUser.Email);
     }
 
@@ -34,8 +38,13 @@ public class SaveToJSON : MonoBehaviour
 
     public void updateJSONonAction(string email)
     {
+        text.text = "START SAVING";
+
         string json = File.ReadAllText(gameManager.filePath + gameManager.fileName);
+
+
         AccountsListSerialized accountsListSerialized = JsonUtility.FromJson<AccountsListSerialized>(json);
+
 
         int emailIndex = FindEmailIndexInJSON(accountsListSerialized, email);
         if (emailIndex != -1)
@@ -51,6 +60,9 @@ public class SaveToJSON : MonoBehaviour
 
             updateJSONfile(accountsListSerialized, gameManager.filePath, gameManager.fileName);
         }
+
+
+        text.text = "FINISHED SAVING";
     }
 
     private int FindEmailIndexInJSON(AccountsListSerialized list, string email)
@@ -70,6 +82,7 @@ public class SaveToJSON : MonoBehaviour
     private void updateJSONfile(AccountsListSerialized list, string filepath, string filename)
     {
         string emptyJson2 = JsonUtility.ToJson(list, true);
+        //googleUserEmailTXT.text = "UpdatedJSONfile \n at:\n " +filepath+filename;
         Debug.Log("Created JSON data");
         File.WriteAllText(filepath + filename, emptyJson2);
     }
