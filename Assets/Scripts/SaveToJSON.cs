@@ -14,6 +14,8 @@ public class SaveToJSON : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI text;
 
+    [SerializeField] private CostumeData data;
+
 
     void OnApplicationFocus(bool hasFocus)
     {
@@ -52,6 +54,7 @@ public class SaveToJSON : MonoBehaviour
             account.hp = playerData.hp;
             account.food = playerData.food;
             account.money = playerData.money;
+            playerData.PopulateCostumeList(data);
             account.costumeList = playerData.costumeList;
 
             updateJSONfile(accountsListSerialized, gameManager.filePath, gameManager.fileName);

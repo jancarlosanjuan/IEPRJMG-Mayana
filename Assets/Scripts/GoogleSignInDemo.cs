@@ -208,7 +208,7 @@ public class GoogleSignInDemo : MonoBehaviour
                                 CreateNewAccountSerialized(gameManager.GoogleUser.Email, ""));
 
                             string emptyJson = JsonUtility.ToJson(accountsListSerialized_MAIN, true);
-                            
+                           
                             Debug.Log("Created JSON data");
                             File.WriteAllText(gameManager.filePath + gameManager.fileName, emptyJson);
                         }
@@ -219,7 +219,7 @@ public class GoogleSignInDemo : MonoBehaviour
                     
                         var j3 = SimpleJSON.JSON.Parse(req3.downloadHandler.text);
 
-                        txtpro.text = "";
+                        //txtpro.text = "";
 
                         if (playerData != null)
                         {
@@ -263,9 +263,8 @@ public class GoogleSignInDemo : MonoBehaviour
 
                         //load stuff
                         LoadPlayerDataFromJSON(gameManager.GoogleUser.Email);
-                        googleUserEmailTXT.text = "loading...";
-
-                        googleUserEmailTXT.text = gameManager.GoogleUser.Email;
+                        //googleUserEmailTXT.text = "loading...";
+                        
                         StartCoroutine(timer());
 
                         
@@ -290,7 +289,7 @@ public class GoogleSignInDemo : MonoBehaviour
     IEnumerator timer()
     {
         //googleUserEmailTXT.text = "changing world...";
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(5);
 
         if (playerData.selectedPetName == "someName")
         {
@@ -377,7 +376,7 @@ public class GoogleSignInDemo : MonoBehaviour
                             t[k] = null;
                             t.Remove(t[k]);
                             isFound = true;
-                            googleUserEmailTXT.text = "removed a task";
+                            //googleUserEmailTXT.text = "removed a task";
                             break;
                         }
                     }
@@ -397,7 +396,7 @@ public class GoogleSignInDemo : MonoBehaviour
                     {
                         tls[j] = null;
                         tls.Remove(tls[j]);
-                        googleUserEmailTXT.text = "removed a tasklist";
+                        //googleUserEmailTXT.text = "removed a tasklist";
                         break;
                     }
                 }
@@ -425,32 +424,9 @@ public class GoogleSignInDemo : MonoBehaviour
     {
        
 
-        //check if file exists
-        //bool test = File.Exists(gameManager.filePath + gameManager.fileName);
-        //Debug.Log("Bool: " + test + "  Name:  " + filePath+fileName);
-        //TaskList tl = JsonUtility.FromJson<TaskList>()
-
-
-        //if does not exist
-        //create
-        /*if (!test)
-        {
-            accountsListSerialized_2.accountsSerialized.Add(CreateNewAccountSerialized(email, tasklistid));
-            string emptyJson = JsonUtility.ToJson(accountsListSerialized_2, true);
-            Debug.Log("Created JSON data");
-            File.WriteAllText(gameManager.filePath + gameManager.fileName, emptyJson);
-        }*/
-
         //
         {
             //open
-            //string json = File.ReadAllText(gameManager.filePath + gameManager.fileName);
-            //accountsListSerialized_2 = JsonUtility.FromJson<AccountsListSerialized>(json);
-            //Debug.Log("JSON: " + jsonFileRead.Email + " " +jsonFileRead.tasksListSerialized[0].tasks[0]);
-
-            //check if email exists inside json
-            //AccountSerialized toFind = new AccountSerialized();
-            //toFind.Email = "testEmail";//gameManager.GoogleUser.Email;
 
             int emailIndex = FindEmailIndexInJSON(accountsListSerialized_2, email);
             if (emailIndex != -1) 
@@ -481,13 +457,23 @@ public class GoogleSignInDemo : MonoBehaviour
                         
                         tasks[taskindex].dueDate = currentLoggedInTask.dueDate;
 
+
+                        //googleUserEmailTXT.text = currentLoggedInTask.status;
+                        if (tasks[taskindex].status != "needsAction")
+                        {
+                            googleUserEmailTXT.text = tasks[taskindex].status;
+                        }
+                        
+
                         if (tasks[taskindex].status != currentLoggedInTask.status)
                         {
                             tasks[taskindex].status = currentLoggedInTask.status;
-                            if (currentLoggedInTask.status == "completed")
+                            if (currentLoggedInTask.status != "needsAction")
                             {
+                                
                                 //reward
                                 playerData.completedTasks++;
+                                googleUserEmailTXT.text = "Added Reward..." + playerData.completedTasks.ToString();
                             }
                         }
                         
@@ -518,6 +504,8 @@ public class GoogleSignInDemo : MonoBehaviour
                 Debug.Log("Email DOES NOT Exists");
                 //append
                 accountsListSerialized_2.accountsSerialized.Add(CreateNewAccountSerialized(email, tasklistid));
+                googleUserEmailTXT.text = "email does not exist error";
+
             }
         }
         
@@ -548,6 +536,8 @@ public class GoogleSignInDemo : MonoBehaviour
 
         string currentDate = System.DateTime.UtcNow.ToLocalTime().ToString("yyyy MM dd hh mm ss");
 
+        
+            
         string currentYearStr = currentDate.Substring(0, 4);
         string currentMonthStr = currentDate.Substring(5, 2);
         string currentDayStr = currentDate.Substring(8, 2);
@@ -562,7 +552,17 @@ public class GoogleSignInDemo : MonoBehaviour
         int currentMinuteInt = Int32.Parse(currentMin);
         int currentSecondInt = Int32.Parse(currentSec);
 
-     
+
+        /*
+        googleUserEmailTXT.text = "Current Date:   " + currentDate + "\n"
+                                              + " Date:  " + year + " " + month + " " + day + " Time:  " + hour + " " +
+                                              minute + " " + second + " " +
+                                              "CURRENT Date:  " + currentYearInt + " " + currentMonthInt + " " +
+                                              currentDayInt +
+                                              "CURRENT Time:  " + currentHourInt + " " + currentMinuteInt + " " +
+                                              currentSecondInt + " ";
+
+        */
 
         Debug.Log(" Date:  "+ year + " " + month + " " + day + " Time:  " + hour + " " + minute + " " + second + " " );
         Debug.Log("CURRENT Date:  " + currentYearInt + " " + currentMonthInt + " " + currentDayInt + 
@@ -570,17 +570,17 @@ public class GoogleSignInDemo : MonoBehaviour
 
 
         // compare to current date
-        if (year <= currentYearInt)
+        if (year > currentYearInt)
         { 
-            if (month <= currentMonthInt)
+            if (month > currentMonthInt)
             {
-                if (day <= currentDayInt)
+                if (day > currentDayInt)
                 {
-                    if (hour <= currentHourInt)
+                    if (hour > currentHourInt)
                     {
-                        if (minute <= currentMinuteInt)
+                        if (minute > currentMinuteInt)
                         {
-                            if (second < currentSecondInt)
+                            if (second >= currentSecondInt)
                             {
                                 return false;
                             }
@@ -597,6 +597,7 @@ public class GoogleSignInDemo : MonoBehaviour
 
     public AccountSerialized CreateNewAccountSerialized(string email, string ID)
     {
+        googleUserEmailTXT.text = "creating account...";
         AccountSerialized account = new AccountSerialized();
         account.Email = email;//gameManager.GoogleUser.Email;
         TaskListSerialized tls = CreateTaskListSerialized(currentLoggedInTask); //use currenttask instead of this 
@@ -608,14 +609,15 @@ public class GoogleSignInDemo : MonoBehaviour
         account.food = 10;
         account.money = 150;
 
+        /*
         playerData.selectedBGName = "someBGName";
         playerData.selectedPetName = "someName";
         playerData.hp = account.hp;
         playerData.food = account.food;
         playerData.money = account.money;
+        */
 
-
-        //tls.tasks.Add(currentLoggedInTask);
+        tls.tasks.Add(currentLoggedInTask);
         account.tasksListSerialized.Add(tls);
 
         return account;
@@ -635,21 +637,27 @@ public class GoogleSignInDemo : MonoBehaviour
             AccountSerialized account = accountsListSerialized.accountsSerialized[emailIndex];
             
             playerData.selectedPetName = account.selectedPetName;
+           
             playerData.selectedBGName = account.selectedBGName;
             playerData.hp = account.hp;
             playerData.food = account.food;
             playerData.money = account.money;
 
-            //playerData.costumeList = account.costumeList; //ALJON
-            //playerData.costumeList.Clear();
+            /*
+            googleUserEmailTXT.text = playerData.selectedBGName + "\n" +
+                                      playerData.hp + "\n" +
+                                      playerData.food + "\n" +
+                                      playerData.money + "\n";*/
 
-            /*for (int i = 0; i < account.costumeList.Count; i++)
+           playerData.costumeList.Clear();
+
+            for (int i = 0; i < account.costumeList.Count; i++)
             {
                 CostumeType type = (CostumeType)System.Enum.Parse(typeof(CostumeType), account.costumeList[i]);
                 costumeData.list.Add(type);
-            }*/
+            }
 
-            googleUserEmailTXT.text = "UPDATING PlayerData....";
+            //googleUserEmailTXT.text = "UPDATING PlayerData....";
             LoadPlayerTasksFromJSON(account, email);
 
         }
