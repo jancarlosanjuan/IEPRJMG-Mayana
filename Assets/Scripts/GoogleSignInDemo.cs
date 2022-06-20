@@ -263,8 +263,6 @@ public class GoogleSignInDemo : MonoBehaviour
                             //txtpro.text += $"\nTitle: {task.title}\nTask ID: {task.taskId}\nNotes: {task.notes}\nStatus: {task.status}\nDue Date: {task.dueDate}";
                         }
 
-                        googleUserEmailTXT.text = playerData.completedTasks.ToString();
-
                         updateJSONfile(accountsListSerialized_MAIN, gameManager.filePath, gameManager.fileName);
 
                         //force update unused data in json
